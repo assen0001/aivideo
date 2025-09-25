@@ -1,0 +1,26 @@
+@layer utilities {
+    .content-auto {
+        content-visibility: auto;
+    }
+    .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .bg-glass {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    .transition-transform-opacity {
+        transition-property: transform, opacity;
+    }
+    .step-active {
+        @apply border-primary bg-primary/10 text-primary;
+    }
+    .step-completed {
+        @apply border-secondary bg-secondary/10 text-secondary;
+    }
+    .step-pending {
+        @apply border-gray-300 bg-gray-100 text-gray-500;
+    }
+}
