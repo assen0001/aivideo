@@ -70,7 +70,7 @@ def get_video_status():
             # 动态构建SQL查询语句
             base_sql = """SELECT a.book_id, a.job_name, a.job_type, a.job_status, 
                           a.job_note, a.create_time, a.stop_time, 
-                          b.videomerge_url
+                          b.videomerge_url, b.videocover_url
                        FROM ai_jobonline a
                        LEFT JOIN ai_videomerge b ON a.book_id = b.book_id 
                        """

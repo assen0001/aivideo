@@ -46,75 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const AIBOOKVIDEO_URL = config.AIBOOKVIDEO_URL || '';
   const COMFYUI_URL_WAN = config.COMFYUI_URL_WAN || '';
   const COMFYUI_URL_PATH = config.COMFYUI_URL_PATH || '';
-  
-  // 视频时长滑块和输入框联动
-  // durationSlider.addEventListener('input', function () {
-  //   var value = parseInt(durationSlider.value);
-  //   durationInput.value = value;
-  //   durationValue.textContent = "".concat(value, "秒");
-
-  //   // 免费会员时长限制检查
-  //   if (value > 30) {
-  //     showNotification('提示', '免费会员最长支持30秒视频，升级VIP可解锁更长时长', 'info');
-  //     durationSlider.value = 30;
-  //     durationInput.value = 30;
-  //     durationValue.textContent = '180秒';
-  //   }
-  // });
-
-  // durationInput.addEventListener('input', function () {
-  //   var value = parseInt(durationInput.value) || 5;
-  //   // 限制最小值和最大值
-  //   value = Math.min(Math.max(value, 5), 30);
-  //   durationInput.value = value;
-  //   durationSlider.value = value;
-  //   durationValue.textContent = "".concat(value, "秒");
-  // });
-
-  // 图片上传预览
-  // fileUpload.addEventListener('change', function (e) {
-  //   var file = e.target.files[0];
-  //   if (file) {
-  //     // 检查文件类型
-  //     if (!file.type.startsWith('image/')) {
-  //       showNotification('错误', '请上传图片文件', 'error');
-  //       return;
-  //     }
-
-  //     // 检查文件大小
-  //     if (file.size > 10 * 1024 * 1024) {
-  //       showNotification('错误', '图片大小不能超过10MB', 'error');
-  //       return;
-  //     }
-
-  //     var reader = new FileReader();
-  //     reader.onload = function (event) {
-  //       // 显示上传图片预览
-  //       uploadedImages.classList.remove('hidden');
-  //       uploadedImages.innerHTML = "<div class=\"relative\">\n  <img src=\"" + event.target.result + "\" alt=\"上传图片预览\" class=\"w-24 h-24 object-cover rounded-md border border-gray-200\">\n    <button type=\"button\" class=\"absolute top-1 right-1 bg-white rounded-full p-1 shadow-md text-gray-500 hover:text-red-500 transition duration-150 ease-in-out\" id=\"remove-image\">\n      <i class=\"fas fa-times\">\n      </i>\n    </button>\n  </div>";
-
-  //       // 移除图片预览
-  //       document.getElementById('remove-image').addEventListener('click', function () {
-  //         uploadedImages.classList.add('hidden');
-  //         uploadedImages.innerHTML = '';
-  //         fileUpload.value = '';
-  //       });
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // });
-
-  // 背景音乐播放/暂停按钮切换
-  playMusicBtn.addEventListener('click', function () {
-    playMusicBtn.classList.add('hidden');
-    pauseMusicBtn.classList.remove('hidden');
-    showNotification('提示', '背景音乐预览功能即将上线', 'info');
-  });
-
-  pauseMusicBtn.addEventListener('click', function () {
-    pauseMusicBtn.classList.add('hidden');
-    playMusicBtn.classList.remove('hidden');
-  });
 
   // 视频规格选择样式切换函数
   function updateAspectSelection() {
@@ -298,28 +229,10 @@ document.addEventListener('DOMContentLoaded', function () {
             indextts_url: INDEXTTS_URL,
           })
         })
-        .then(response => response.json())
-        .catch(n8nError => {
-          console.error('n8n Error:', n8nError);
-          // 处理n8n错误
-        }); 
+        .then(response => response.json()); 
 
         // 执行定时任务 检查视频是否生成完成
         checkVideoStatus(data.book_id);
-
-        // 视频创建成功
-        // setTimeout(function () {
-        //   generationStatus.classList.add('hidden');
-        //   generationResult.classList.remove('hidden');
-          
-        //   // 更新成功消息
-        //   var resultTitle = document.querySelector('#generation-result h3');
-        //   var resultMessage = document.querySelector('#generation-result p');
-        //   if (resultTitle && resultMessage) {
-        //     resultTitle.textContent = '视频创建成功！';
-        //     resultMessage.textContent = '您的视频项目已成功创建，项目ID: ' + data.book_id;
-        //   }
-        // }, 1000);
       } else {
         // 视频创建失败
         generationStatus.classList.add('hidden');
@@ -358,17 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   });
 
-  
-  // 高级配置切换功能
-  // var toggleAdvancedBtn = document.getElementById('toggle-advanced-settings');
-  // var advancedSettings = document.getElementById('advanced-settings');
-  // var advancedSettingsIcon = document.getElementById('advanced-settings-icon');
-  // toggleAdvancedBtn.addEventListener('click', function () {
-  //   advancedSettings.classList.toggle('hidden');
-  //   advancedSettingsIcon.classList.toggle('rotate-180');
-  // });
-
-  checkVideoStatus(0);
+  checkVideoStatus(0);    // 检查视频状态，0 表示默认值
 
   // 定时任务：检查任务状态和进度条更新
   function checkVideoStatus(book_id) {
@@ -383,13 +286,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.status === 'success' && data.data.length > 0) {
                     const jobs = data.data;   
                     console.log("jobs:", jobs);
-                    book_id = jobs[0].book_id;             
+                    book_id = jobs[0].book_id;   
+                    cover_url = jobs[0].videocover_url;   // 封面URL 
+                    merge_url = jobs[0].videomerge_url;   // 合并视频URL 
 
                     // 显示生成状态
                     formContent.classList.add('hidden');
                     generationStatus.classList.remove('hidden');
                                     
-                    // 判断首条任务状态
+                    // 判断首条任务状态：2-成功，4-失败
                     if (jobs[0].job_status === 2) {
                         // 视频创建成功
                         generationStatus.classList.add('hidden');
@@ -401,6 +306,82 @@ document.addEventListener('DOMContentLoaded', function () {
                             resultTitle.textContent = '视频创建成功！';
                             resultMessage.textContent = '您的视频项目已成功创建，项目ID: ' + book_id;
                         }
+                        
+                        // 设置封面图片URL，并实现等比例缩放逻辑
+                        var coverImg = document.querySelector('#generation-result img');
+                        if (coverImg && cover_url) {
+                            // 设置图片源
+                            coverImg.src = cover_url;
+                            
+                            // 设置样式确保等比例缩放且不超出控件
+                            coverImg.className = 'object-contain mx-auto';
+                            
+                            // 移除固定宽高设置，让浏览器根据CSS自动处理
+                            coverImg.removeAttribute('width');
+                            coverImg.removeAttribute('height');
+                            
+                            // 创建一个新的Image对象来获取原始图片尺寸
+                            var tempImg = new Image();
+                            tempImg.onload = function() {
+                                // 原始图片尺寸
+                                var origWidth = tempImg.width;
+                                var origHeight = tempImg.height;
+                                
+                                // 目标最大尺寸
+                                var maxWidth = 1200;
+                                var maxHeight = 600;
+                                
+                                // 计算缩放比例
+                                var widthRatio = maxWidth / origWidth;
+                                var heightRatio = maxHeight / origHeight;
+                                
+                                // 选择较小的缩放比例以确保图片完全在容器内
+                                var scaleRatio = Math.min(widthRatio, heightRatio, 1); // 不放大，只缩小
+                                
+                                // 计算新的尺寸
+                                var newWidth = Math.round(origWidth * scaleRatio);
+                                var newHeight = Math.round(origHeight * scaleRatio);
+                                
+                                // 设置图片的最大宽度和高度，保持等比例
+                                coverImg.style.maxWidth = newWidth + 'px';
+                                coverImg.style.maxHeight = newHeight + 'px';
+                            };
+                            // 设置临时图片的源，触发onload事件
+                            tempImg.src = cover_url;
+                        }
+                        
+                        // 为播放按钮添加点击事件，播放合并视频
+                        var playButton = document.querySelector('#generation-result > div.mt-6 > div > button');
+                        if (playButton && merge_url) {
+                            playButton.onclick = function() {
+                                window.open(merge_url, '_blank');
+                            };
+                        }
+                        
+                        // 为下载视频按钮添加点击事件，下载MP4格式视频文件
+                        var downloadButton = document.querySelector('#generation-result .fa-download').closest('button');
+                        if (downloadButton && merge_url) {
+                            downloadButton.onclick = function() {
+                                // 创建一个临时的a标签用于下载
+                                var downloadLink = document.createElement('a');
+                                downloadLink.href = merge_url;
+                                
+                                // 直接从URL中提取文件名（最后一部分）
+                                var urlParts = merge_url.split('/');
+                                var fileName = urlParts.length > 0 ? urlParts[urlParts.length - 1] : 'video.mp4';
+                                
+                                downloadLink.download = fileName;
+                                downloadLink.style.display = 'none';
+                                
+                                // 将a标签添加到文档中并触发点击
+                                document.body.appendChild(downloadLink);
+                                downloadLink.click();
+                                
+                                // 清理
+                                document.body.removeChild(downloadLink);
+                            };
+                        }
+                        
                         return; // 终止轮询
                     }
 
@@ -429,6 +410,8 @@ document.addEventListener('DOMContentLoaded', function () {
                           console.error('n8n Error:', n8nError);
                           // 处理n8n错误
                         }); 
+
+                        return; // 终止轮询
                     }
 
                     // 这里增加判断 jobs数组末尾项目job_type的值：
@@ -460,22 +443,24 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => checkVideoStatus(book_id), 10000);
   }  
 
-
-
-
-
   // 创作新视频按钮点击事件
-  document.querySelector('#generation-result button:has(i.fas.fa-edit)').addEventListener('click', function() {
-    // 获取当前的book_id
-    // const bookIdElement = document.querySelector('#generation-result p');
-    // let bookId = 0;
+  document.querySelector('#generation-result button:has(i.fas.fa-edit)').addEventListener('click', function() {   
+    // 异步发送GET请求删除后台任务表里数据
+    fetch(`/autovideo/delete_job?book_id=`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).catch(error => console.error('请求失败:', error));
     
-    // if (bookIdElement) {
-    //   const match = bookIdElement.textContent.match(/项目ID: (\d+)/);
-    //   if (match && match[1]) {
-    //     bookId = match[1];
-    //   }
-    // }
+    // 跳转到链接：/createvideo
+    window.location.href = '/createvideo';
+  });
+  
+  // 取消生成按钮点击事件 - 与创作新视频按钮执行相同操作
+  document.querySelector('#cancel-generation').addEventListener('click', function() {   
+    // 添加一个确认弹窗
+    if (!confirm('确定要取消视频生成吗？')) { return; }
     
     // 异步发送GET请求删除后台任务表里数据
     fetch(`/autovideo/delete_job?book_id=`, {
@@ -489,5 +474,16 @@ document.addEventListener('DOMContentLoaded', function () {
     window.location.href = '/createvideo';
   });
 
+  // 背景音乐播放/暂停按钮切换
+  playMusicBtn.addEventListener('click', function () {
+    playMusicBtn.classList.add('hidden');
+    pauseMusicBtn.classList.remove('hidden');
+    showNotification('提示', '背景音乐预览功能即将上线', 'info');
+  });
+
+  pauseMusicBtn.addEventListener('click', function () {
+    pauseMusicBtn.classList.add('hidden');
+    playMusicBtn.classList.remove('hidden');
+  });
 
 });
