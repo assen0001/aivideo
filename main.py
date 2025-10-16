@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 from flask_cors import CORS 
 from booklist import booklist_bp
 from imageslist import imageslist_bp
@@ -7,9 +7,14 @@ from txt2voice import txt2voice_bp
 from videomerge import videomerge_bp
 from autovideo import autovideo_bp
 from autovideo_list import autovideo_list_bp
-from flask import request, jsonify
+from register import register_bp
+from login import login_bp
+import os
+import secrets
 
 app = Flask(__name__)
+app.secret_key = secrets.token_urlsafe(32)  # 设置安全的密钥用于session管理
+app.permanent_session_lifetime = 7 * 24 * 60 * 60  # 设置持久化session的生命周期为7天
 
 # 精确配置CORS
 CORS(app, resources={
@@ -28,6 +33,8 @@ app.register_blueprint(txt2voice_bp)
 app.register_blueprint(videomerge_bp)
 app.register_blueprint(autovideo_bp)
 app.register_blueprint(autovideo_list_bp)
+app.register_blueprint(register_bp)
+app.register_blueprint(login_bp)
 
 @app.route('/')
 def index():
@@ -97,6 +104,7 @@ def user_change_password():
 def user_customer_service():
     """用户联系客服页面"""
     return render_template('user/customer_service.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5800, debug=True)
