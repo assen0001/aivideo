@@ -1,0 +1,158 @@
+{% extends "user/base_user.html" %}
+
+{% block title %}订单明细 - 用户中心{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <!-- 页面标题 -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">订单明细</h1>
+    <p class="text-gray-600">查看您的所有订单记录</p>
+  </div>
+  
+  <!-- 订单统计 -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center">
+        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+          <i class="fas fa-receipt text-xl"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm text-gray-500">总订单数</p>
+          <p class="text-2xl font-bold">28</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center">
+        <div class="p-3 rounded-full bg-green-100 text-green-600">
+          <i class="fas fa-check-circle text-xl"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm text-gray-500">已完成</p>
+          <p class="text-2xl font-bold">25</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center">
+        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+          <i class="fas fa-clock text-xl"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm text-gray-500">处理中</p>
+          <p class="text-2xl font-bold">2</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center">
+        <div class="p-3 rounded-full bg-red-100 text-red-600">
+          <i class="fas fa-times-circle text-xl"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm text-gray-500">已取消</p>
+          <p class="text-2xl font-bold">1</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 订单列表 -->
+  <div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-semibold">订单列表</h2>
+        <div class="flex space-x-4">
+          <select class="border rounded-lg px-3 py-2">
+            <option>全部状态</option>
+            <option>待支付</option>
+            <option>处理中</option>
+            <option>已完成</option>
+            <option>已取消</option>
+          </select>
+          <input type="text" placeholder="搜索订单号..." class="border rounded-lg px-3 py-2 w-64">
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-6">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-3 px-4">订单号</th>
+              <th class="text-left py-3 px-4">商品名称</th>
+              <th class="text-left py-3 px-4">金额</th>
+              <th class="text-left py-3 px-4">创建时间</th>
+              <th class="text-left py-3 px-4">状态</th>
+              <th class="text-left py-3 px-4">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4 font-mono text-sm">ORD202401150001</td>
+              <td class="py-3 px-4">AI视频制作服务</td>
+              <td class="py-3 px-4">
+                <span class="font-bold">¥ 29.90</span>
+              </td>
+              <td class="py-3 px-4">2024-01-15 14:30</td>
+              <td class="py-3 px-4">
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">已完成</span>
+              </td>
+              <td class="py-3 px-4">
+                <button class="text-blue-600 hover:text-blue-800 text-sm">查看详情</button>
+              </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4 font-mono text-sm">ORD202401140002</td>
+              <td class="py-3 px-4">账户充值</td>
+              <td class="py-3 px-4">
+                <span class="font-bold">¥ 100.00</span>
+              </td>
+              <td class="py-3 px-4">2024-01-14 16:45</td>
+              <td class="py-3 px-4">
+                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">处理中</span>
+              </td>
+              <td class="py-3 px-4">
+                <button class="text-blue-600 hover:text-blue-800 text-sm">查看详情</button>
+              </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4 font-mono text-sm">ORD202401130003</td>
+              <td class="py-3 px-4">VIP会员升级</td>
+              <td class="py-3 px-4">
+                <span class="font-bold">¥ 199.00</span>
+              </td>
+              <td class="py-3 px-4">2024-01-13 09:20</td>
+              <td class="py-3 px-4">
+                <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">已取消</span>
+              </td>
+              <td class="py-3 px-4">
+                <button class="text-blue-600 hover:text-blue-800 text-sm">查看详情</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- 分页 -->
+      <div class="flex justify-between items-center mt-6">
+        <p class="text-gray-600">显示 1-3 条，共 28 条</p>
+        <div class="flex space-x-2">
+          <button class="px-3 py-1 border rounded">上一页</button>
+          <button class="px-3 py-1 border rounded bg-blue-600 text-white">1</button>
+          <button class="px-3 py-1 border rounded">2</button>
+          <button class="px-3 py-1 border rounded">3</button>
+          <button class="px-3 py-1 border rounded">下一页</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

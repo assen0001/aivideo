@@ -1,0 +1,128 @@
+{% extends 'v2/base.html' %}
+
+{% block content %}
+  <!-- [MODULE] g5h_价格方案 -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-900 mb-4">升级VIP会员</h2>
+      <p class="text-lg text-gray-500 mb-8">灵活的价格方案满足个人和企业的不同需求</p>
+      <div class="inline-flex p-1 bg-white rounded-lg shadow-sm border border-gray-200">
+       <button class="px-6 py-2 text-sm font-medium text-primary bg-primary/5 rounded-md" id="monthly-billing">月付</button>
+       <button class="px-6 py-2 text-sm font-medium text-gray-500 hover:text-gray-700" id="yearly-billing">年付<span class="ml-1 text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded-full">省20%</span></button>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- Free Plan -->
+      <div class="bg-white rounded-2xl shadow-card p-8 transition-all hover:shadow-hover">
+       <h3 class="text-xl font-bold text-gray-900 mb-2">免费版</h3>
+       <p class="text-gray-500 mb-6">适合初次体验AI视频生成</p>
+       <div class="mb-6">
+        <span class="text-4xl font-bold text-gray-900">¥0</span>
+        <span class="text-gray-500">/永久</span>
+       </div>
+       <ul class="space-y-4 mb-8">
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">每月生成3个视频</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">最长视频时长30秒</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">480P标清视频</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">基础风格模板</span>
+        </li>
+        <li class="flex items-start text-gray-400">
+         <i class="fas fa-times mt-1 mr-3"></i>
+         <span>自定义素材上传</span>
+        </li>
+        <li class="flex items-start text-gray-400">
+         <i class="fas fa-times mt-1 mr-3"></i>
+         <span>无水印导出</span>
+        </li>
+       </ul>
+       <a class="block w-full py-3 text-center font-medium text-primary border border-primary rounded-lg hover:bg-primary/5 transition-colors" href="javascript:void(0);">免费开始使用</a>
+      </div>
+      <!-- Pro Plan -->
+      <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-primary relative transform md:-translate-y-4 transition-all hover:shadow-2xl">     
+       <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1 rounded-bl-lg">最受欢迎</div>
+       <h3 class="text-xl font-bold text-gray-900 mb-2">专业版</h3>
+       <p class="text-gray-500 mb-6">适合个人创作者和小型团队</p>
+       <div class="mb-6">
+        <span class="text-4xl font-bold text-gray-900">¥198</span>
+        <span class="text-gray-500">/月</span>
+       </div>
+       <ul class="space-y-4 mb-8">
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">每月生成30个视频</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">最长视频时长3分钟</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">720P高清视频</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">全部风格模板</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">自定义素材上传</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">无水印导出</span>
+        </li>
+       </ul>
+       <a class="block w-full py-3 text-center font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl" href="javascript:void(0);">选择专业版</a>
+      </div>
+      <!-- Business Plan -->
+      <div class="bg-white rounded-2xl shadow-card p-8 transition-all hover:shadow-hover">
+       <h3 class="text-xl font-bold text-gray-900 mb-2">尊享版</h3>
+       <p class="text-gray-500 mb-6">适合企业级视频营销需求</p>
+       <div class="mb-6">
+        <span class="text-4xl font-bold text-gray-900">¥498</span>
+        <span class="text-gray-500">/月</span>
+       </div>
+       <ul class="space-y-4 mb-8">
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">每月生成100个视频</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">最长视频时长10分钟</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">1080P高清视频</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">专属定制模板</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">品牌定制功能</span>
+        </li>
+        <li class="flex items-start">
+         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
+         <span class="text-gray-700">优先技术支持</span>
+        </li>
+       </ul>
+       <a class="block w-full py-3 text-center font-medium text-primary border border-primary rounded-lg hover:bg-primary/5 transition-colors" href="javascript:void(0);">联系销售团队</a>
+      </div>
+     </div>
+    </div>
+  </section>
+{% endblock %}

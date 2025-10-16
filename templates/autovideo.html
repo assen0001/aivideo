@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="video-generator-container">
+    <!-- 顶部标题区域 -->
+    <div class="header-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="page-title">
+                        <i class="fas fa-video"></i>
+                        AI视频创作平台
+                    </h1>
+                    <p class="page-subtitle">AI驱动的长视频创作平台，让每一个主题都拥有自己的视觉故事</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">系统就绪</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <!-- 左侧表单区域 -->
+                <div class="col-lg-8">
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-edit"></i>
+                                创作信息
+                            </h2>
+                            <p class="section-description">填写书籍信息，AI将为您生成独特的视频内容</p>
+                        </div>
+
+                        <form id="bookForm" class="modern-form">
+                            <input type="hidden" id="bookId">
+                            
+                            <!-- 基本信息卡片 -->
+                            <div class="form-card">
+                                <h3 class="card-title">基本信息</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="modalBookName" class="form-label">
+                                                <i class="fas fa-book"></i>
+                                                书名
+                                            </label>
+                                            <input type="text" class="form-control" id="modalBookName" placeholder="请输入书名" required>
+                                            <div class="input-glow"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="modalBookAuthor" class="form-label">
+                                                <i class="fas fa-user"></i>
+                                                作者
+                                            </label>
+                                            <input type="text" class="form-control" id="modalBookAuthor" placeholder="请输入作者姓名" required>
+                                            <div class="input-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="modalBookNote" class="form-label">
+                                        <i class="fas fa-align-left"></i>
+                                        书籍简介
+                                    </label>
+                                    <textarea class="form-control" id="modalBookNote" rows="3" placeholder="可选：请简要描述这本书的内容和亮点"></textarea>
+                                    <div class="input-glow"></div>
+                                </div>
+                            </div>
+
+                            <!-- 创作配置卡片 -->
+                            <div class="form-card">
+                                <h3 class="card-title">创作配置</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="modalBookStyler" class="form-label">
+                                                <i class="fas fa-palette"></i>
+                                                视觉风格
+                                            </label>
+                                            <select class="form-select" id="modalBookStyler" required>
+                                                <option value="">选择视觉风格</option>
+                                                <optgroup label="🎨 艺术风格">
+                                                    <option value="sai-动漫风格">动漫风格</option>
+                                                    <option value="sai-电影感">电影感</option>
+                                                    <option value="sai-数字艺术">数字艺术</option>
+                                                    <option value="artstyle-水彩画">水彩画</option>
+                                                    <option value="artstyle-抽象">抽象艺术</option>
+                                                </optgroup>
+                                                <optgroup label="🎭 创意设计">
+                                                    <option value="sai-3D模型">3D模型</option>
+                                                    <option value="sai-手工黏土">黏土风格</option>
+                                                    <option value="papercraft-立体折纸">折纸艺术</option>
+                                                    <option value="sai-像素艺术">像素艺术</option>
+                                                </optgroup>
+                                                <optgroup label="🌆 现代都市">
+                                                    <option value="futuristic-赛博朋克都市">赛博朋克</option>
+                                                    <option value="misc-大都市">都市风光</option>
+                                                    <option value="sai-霓虹朋克">霓虹朋克</option>
+                                                </optgroup>
+                                                <optgroup label="📸 摄影写实">
+                                                    <option value="sai-摄影">摄影写实</option>
+                                                    <option value="sai-胶片摄影">胶片质感</option>
+                                                    <option value="photo-HDR摄影">HDR效果</option>
+                                                </optgroup>
+                                            </select>
+                                            <div class="input-glow"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="modalBookPrompt" class="form-label">
+                                                <i class="fas fa-magic"></i>
+                                                创作提示词
+                                            </label>
+                                            <input type="text" class="form-control" id="modalBookPrompt" placeholder="可选：添加个性化描述">
+                                            <div class="input-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 生成按钮 -->
+                            <div class="action-section">
+                                <button type="submit" class="btn-generate" id="btnGenerate">
+                                    <span class="btn-text">一键生成视频</span>
+                                    <span class="btn-loader" style="display: none;">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        视频生成中...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 右侧预览和状态区域 -->
+                <div class="col-lg-4">
+                    <!-- 预览区域 -->
+                    <div class="preview-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-eye"></i>
+                            预览效果
+                        </h3>
+                        <div class="preview-card">
+                            <div class="preview-placeholder">
+                                <i class="fas fa-play-circle"></i>
+                                <p>完成表单后查看预览</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 状态显示区域 -->
+                    <div class="status-section" id="videoStatus" style="display: none;">
+                        <h3 class="section-title">
+                            <i class="fas fa-cog"></i>
+                            进度状态
+                        </h3>
+                        <div class="status-card">
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                                <div class="progress-text">
+                                    <span id="status-text">准备中...</span>
+                                    <span id="progressPercent">0%</span>
+                                </div>
+                            </div>
+                            <div class="status-messages" id="statusMessages">
+                                <!-- 动态状态消息将在这里显示 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 快速提示 -->
+                    <div class="tips-section">
+                        <h4 class="tips-title">
+                            <i class="fas fa-lightbulb"></i>
+                            创作小贴士
+                        </h4>
+                        <ul class="tips-list">
+                            <li>选择适合书籍内容的视觉风格</li>
+                            <li>详细的简介有助于AI更好理解内容</li>
+                            <li>创作提示词可以让视频更具个性</li>
+                            <li>视频生成时间较长，请等待...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加Font Awesome图标库 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- css样式 -->
+<link rel="stylesheet" href="/static/css/style_autovideo.css">
+
+<script src="/static/js/autovideo.js"></script>
+{% endblock %}

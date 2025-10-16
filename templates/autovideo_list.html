@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="autovideo-list-container">
+    <!-- 顶部标题区域 -->
+    <div class="header-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="page-title">
+                        <i class="fas fa-film"></i>
+                        已生成视频列表
+                    </h1>
+                    <p class="page-subtitle">查看和管理所有已生成的AI读书视频</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <div class="controls-section">
+                        <div class="per-page-selector">
+                            <label for="perPageSelect">每页显示：</label>
+                            <select id="perPageSelect" class="form-select">
+                                <option value="10">10条</option>
+                                <option value="20">20条</option>
+                                <option value="50">50条</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <div class="container">
+            <!-- 视频网格 -->
+            <div class="video-grid" id="videoGrid">
+                <!-- 动态加载的视频卡片 -->
+            </div>
+
+            <!-- 加载状态 -->
+            <div class="loading-section" id="loadingSection" style="display: none;">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>正在加载视频数据...</p>
+                </div>
+            </div>
+
+            <!-- 无数据提示 -->
+            <div class="empty-section" id="emptySection" style="display: none;">
+                <div class="empty-content">
+                    <i class="fas fa-video-slash"></i>
+                    <h3>暂无视频数据</h3>
+                    <p>还没有生成任何视频，请前往创作页面开始制作</p>
+                    <a href="/autovideo" class="btn-create-video">
+                        <i class="fas fa-plus"></i>
+                        开始创作
+                    </a>
+                </div>
+            </div>
+
+            <!-- 分页控制 -->
+            <div class="pagination-section" id="paginationSection" style="display: none;">
+                <nav aria-label="视频列表分页">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- 动态生成分页 -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 视频播放模态框 -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-video-vertical">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="videoModalTitle">视频播放</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+            </div>
+            <div class="modal-body">
+                <div class="video-container">
+                    <video id="modalVideo" controls style="width: 100%; height: 100%;">
+                        <source src="" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加Font Awesome图标库 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- 添加页面专用样式 -->
+<link rel="stylesheet" href="/static/css/style_autovideo_list.css">
+
+<script src="/static/js/autovideo_list.js"></script>
+{% endblock %}

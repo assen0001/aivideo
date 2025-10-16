@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mt-4">视频合成管理</h2>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>视频合成管理</h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">选择书单：</label>
+                <div class="col-sm-10">
+                    <select id="bookSelect" class="form-control" style="width: 380px;">
+                        <option value="">-- 请选择书单 --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row mt-4">
+                <div class="col-sm-10 offset-sm-2">                   
+                    <button type="button" class="btn btn-primary" id="mergeBtn">视频合成</button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 显示视频控件 -->
+    <div class="card mt-4" id="videoListContainer" style="display:none;">
+        <div class="card-header">
+            <h5>已合成视频</h5>
+        </div>
+        <div class="card-body" id="videoList">
+            <!-- 视频控件将在这里动态生成 -->
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/videomerge.js') }}"></script>
+{% endblock %}

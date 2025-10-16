@@ -1,0 +1,92 @@
+{% extends 'v2/base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">帮助中心</h1>
+        <div class="flex items-center">
+            <input type="text" placeholder="输入关键字搜索" class="border rounded-l px-4 py-2 focus:outline-none">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600">搜索</button>
+        </div>
+    </div>
+    
+    <div class="flex">
+        <!-- 左侧菜单 -->
+        <div class="w-1/4 pr-4">
+            <div class="bg-white rounded-lg shadow p-4">
+                <ul class="space-y-2">
+                    <li class="font-semibold text-gray-800">功能介绍</li>
+                    <ul class="ml-4 space-y-1 text-gray-600">
+                        <li>文章1</li>
+                        <li>文章2</li>
+                        <li>文章3</li>
+                    </ul>
+                    
+                    <li class="font-semibold text-gray-800">视频教程</li>
+                    <ul class="ml-4 space-y-1 text-gray-600">
+                        <li>文章1</li>
+                        <li>文章2</li>
+                        <li>文章3</li>
+                    </ul>
+                    
+                    <li class="font-semibold text-gray-800">API文档</li>
+                    <ul class="ml-4 space-y-1 text-gray-600">
+                        <li>文章1</li>
+                        <li>文章2</li>
+                        <li>文章3</li>
+                    </ul>
+                    
+                    <li class="font-semibold text-gray-800">常见问题</li>
+                    <ul class="ml-4 space-y-1 text-gray-600">
+                        <li>文章1</li>
+                        <li>文章2</li>
+                        <li>文章3</li>
+                    </ul>
+                    
+                    <li class="font-semibold text-gray-800">使用条款</li>
+                    <ul class="ml-4 space-y-1 text-gray-600">
+                        <li>使用条款</li>
+                    </ul>
+                    
+                    <li class="font-semibold text-gray-800">隐私政策</li>
+                    <ul class="ml-4 space-y-1 text-gray-600">
+                        <li>隐私政策</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 右侧内容 -->
+        <div class="w-3/4">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-2xl font-bold mb-2">文章标题</h2>
+                <div class="flex items-center text-gray-500 text-sm mb-4">
+                    <span class="mr-4">模块: 功能介绍</span>
+                    <span class="mr-4">发布时间: 2023-01-01</span>
+                    <span>阅读数: 1000</span>
+                </div>
+                
+                <div class="prose max-w-none mb-8">
+                    <p>这里是文章内容...</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">关联文章</h3>
+                    <ul class="space-y-1 text-gray-600">
+                        <li>关联文章1</li>
+                        <li>关联文章2</li>
+                        <li>关联文章3</li>
+                        <li>关联文章4</li>
+                        <li>关联文章5</li>
+                        <li>关联文章6</li>
+                        <li>关联文章7</li>
+                        <li>关联文章8</li>
+                        <li>关联文章9</li>
+                        <li>关联文章10</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

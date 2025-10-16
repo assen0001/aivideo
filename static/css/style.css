@@ -1,0 +1,152 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --accent-color: #1abc9c;
+    --dark-color: #1a1a2e;
+    --light-color: #f8f9fa;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: var(--secondary-color);
+    min-height: 100vh;
+    padding: 10px;
+    color: white;
+}
+
+.sidebar-header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: all 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.main-content {
+    padding: 5px;    
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    font-size: 0.9rem;
+}
+
+.table img {
+    width: 200px;
+    height: 266px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-select {
+   width: 200px;
+}
+.status-select {
+    width: 100px;
+    margin-top: 5px;
+}
+.btn-delete-image .btn-redo-image{    
+    margin-top: 5px;
+}
+
+/* 科技感增强效果 */
+.sidebar {
+    background: linear-gradient(135deg, var(--secondary-color), var(--dark-color));
+}
+
+.table thead th {
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+}
+
+.btn-success, .btn-create, .btn-prompt{
+    margin-top: 5px;
+}
+
+.form-check {
+    width: 130px;
+    text-align: left;
+
+}
+
+.form-statustitle {
+    width: 200px;
+    text-align: center;
+}
+
+
+/* 图片单元格样式优化 */
+.image-cell {
+    width: 100%;
+    max-width: 200px;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* 按钮容器样式 */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Hero Image 样式 */
+.bg-gradient-to-bottom {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), transparent);
+}
+
+.from-black-40 {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.hover-opacity-100:hover {
+    opacity: 1 !important;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.transition-opacity {
+    transition: opacity 0.3s ease;
+}
+
+/* 鼠标移入效果增强 */
+.from-black-60 {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+.hover-transform-up:hover {
+    transform: translateY(-10px);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

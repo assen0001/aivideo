@@ -1,0 +1,64 @@
+<!-- 用户后台侧边栏导航 -->
+<div class="h-full flex flex-col">
+  <!-- Logo区域 -->
+  <div class="p-4 border-b" style="height: 73px;">
+    <a href="/" class="text-xl font-bold text-blue-600 hover:text-blue-700">AIVideo用户中心</a>
+    <p class="text-sm text-gray-500">欢迎回来，{{ current_user.username if current_user else 'assen' }}</p>
+  </div>
+  
+  <!-- 导航菜单 -->
+  <nav class="flex-1 p-4">
+    <ul class="space-y-2">
+      <li>
+        <a href="{{ url_for('user_dashboard') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+          <i class="fas fa-tachometer-alt w-6"></i>
+          <span>总览</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('user_my_videos') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+          <i class="fas fa-video w-6"></i>
+          <span>我的视频</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('user_recharge') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+          <i class="fas fa-credit-card w-6"></i>
+          <span>帐号充值</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('user_orders') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+          <i class="fas fa-receipt w-6"></i>
+          <span>订单明细</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('user_profile') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+          <i class="fas fa-user w-6"></i>
+          <span>个人信息</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('user_change_password') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+          <i class="fas fa-lock w-6"></i>
+          <span>修改密码</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('user_customer_service') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+          <i class="fas fa-headset w-6"></i>
+          <span>联系客服</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+  <!-- 底部操作 -->
+  <div class="p-4 border-t">
+    <a href="/v2" class="flex items-center p-3 rounded-lg hover:bg-red-50 text-red-600">
+      <i class="fas fa-sign-out-alt w-6"></i>
+      <span>退出登录</span>
+    </a>
+  </div>
+</div>

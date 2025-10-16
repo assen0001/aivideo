@@ -1,0 +1,370 @@
+/* 全局样式 */
+.autovideo-list-container {
+    /* min-height: 100vh; */
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 顶部标题区域 */
+.header-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
+    padding: 0 0 2rem 0;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin: 0;
+    background: linear-gradient(45deg, #00d4ff, #0099cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+    margin: 0.5rem 0 0 0;
+}
+
+.controls-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.per-page-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.per-page-selector label {
+    color: #a0a0a0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.per-page-selector .form-select {
+    width: auto;
+    min-width: 100px;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* 主要内容区域 */
+.main-content {
+    padding: 0 0 40px;
+}
+
+.main-content .container {
+    padding-top: 40px;
+}
+
+/* 视频网格 */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* 视频卡片 */
+.video-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.video-thumbnail video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-thumbnail .play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 212, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.video-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-overlay i {
+    font-size: 24px;
+    color: white;
+    margin-left: 3px;
+}
+
+.video-info {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, transparent 0%, rgba(24, 24, 24, 0.7) 30%);
+}
+
+.video-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.video-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.video-time {
+    font-size: 0.8rem;
+    color: #e0e0e0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.video-status {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.status-0 { background: rgba(255, 99, 71, 0.2); color: #ff6347; }
+.status-1 { background: rgba(255, 165, 0, 0.2); color: #ffa500; }
+.status-2 { background: rgba(100, 149, 237, 0.2); color: #6495ed; }
+.status-3 { background: rgba(138, 43, 226, 0.2); color: #8a2be2; }
+.status-4 { background: rgba(0, 191, 255, 0.2); color: #00bfff; }
+.status-5 { background: rgba(50, 205, 50, 0.2); color: #32cd32; }
+.status-6 { background: rgba(0, 255, 127, 0.2); color: #00ff7f; }
+
+/* 加载状态 */
+.loading-section {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.loading-spinner {
+    color: #00d4ff;
+}
+
+.loading-spinner i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.loading-spinner p {
+    color: #a0a0a0;
+    margin: 0;
+}
+
+/* 空数据提示 */
+.empty-section {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.empty-content {
+    color: #a0a0a0;
+}
+
+.empty-content i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-content h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.empty-content p {
+    margin-bottom: 2rem;
+}
+
+.btn-create-video {
+    background: linear-gradient(45deg, #00d4ff, #0099cc);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-create-video:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 212, 255, 0.5);
+    color: white;
+}
+
+/* 分页控制 */
+.pagination-section {
+    margin-top: 3rem;
+}
+
+.pagination {
+    --bs-pagination-bg: rgba(255, 255, 255, 0.05);
+    --bs-pagination-border-color: rgba(255, 255, 255, 0.1);
+    --bs-pagination-color: #00d4ff;
+    --bs-pagination-hover-bg: rgba(0, 212, 255, 0.1);
+    --bs-pagination-hover-color: #00d4ff;
+    --bs-pagination-active-bg: #00d4ff;
+    --bs-pagination-active-border-color: #00d4ff;
+    --bs-pagination-disabled-color: #6c757d;
+    --bs-pagination-disabled-bg: rgba(255, 255, 255, 0.02);
+}
+
+/* 模态框样式 */
+.modal-content {
+    background: rgba(15, 15, 35, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+    color: #00d4ff;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* 竖向视频模态框 */
+.modal-video-vertical {
+    max-width: 400px;
+    margin: 1.75rem auto;
+}
+
+.modal-video-vertical .modal-content {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-video-vertical .modal-body {
+    padding: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.video-container {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #000;
+    position: relative;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 576px) {
+    .modal-video-vertical {
+        max-width: 90%;
+        margin: 1rem auto;
+    }
+    
+    .video-container {
+        aspect-ratio: 3/4;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 1400px) {
+    .video-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .controls-section {
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .header-section {
+        padding: 1.5rem 0;
+    }
+    
+    .main-content {
+        padding: 2rem 0;
+    }
+}

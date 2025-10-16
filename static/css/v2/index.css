@@ -1,0 +1,62 @@
+@layer utilities {
+    .content-auto {
+        content-visibility: auto;
+    }
+    .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .bg-glass {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    .transition-transform-opacity {
+        transition-property: transform, opacity;
+    }
+    .step-active {
+        @apply border-primary bg-primary/10 text-primary;
+    }
+    .step-completed {
+        @apply border-secondary bg-secondary/10 text-secondary;
+    }
+    .step-pending {
+        @apply border-gray-300 bg-gray-100 text-gray-500;
+    }
+}
+
+/* 视频生成步骤样式 */
+.step-active {
+    border-color: #3b82f6 !important;
+    background-color: #dbeafe !important;
+    color: #3b82f6 !important;
+}
+
+.step-pending {
+    border-color: #d1d5db !important;
+    background-color: #f9fafb !important;
+    color: #6b7280 !important;
+}
+
+.step-completed {
+    border-color: #10b981 !important;
+    background-color: #d1fae5 !important;
+    color: #10b981 !important;
+}
+
+/* 视频生成步骤悬停效果 */
+.step-icon {
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+.step-item:hover .step-icon {
+    border-color: #3b82f6 !important;
+    background-color: #dbeafe !important;
+    color: #3b82f6 !important;
+    transform: scale(1.05) !important;
+}
+
+.step-item:hover .step-icon i {
+    color: #3b82f6 !important;
+}

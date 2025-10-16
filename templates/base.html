@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI视频创作平台 - 开发版</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 左侧菜单 -->
+            <div class="col-md-2 sidebar">
+                <div class="sidebar-header">
+                    <h3><a class="nav-link" href="/">AI视频创作</a></h3>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/autovideo' %}active{% endif %}" href="/autovideo">一键生成视频</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/autovideo_list' %}active{% endif %}" href="/autovideo_list">已生成视频列表</a>
+                    </li>
+                    <li class="nav-item divider">
+                        <hr style="margin: 10px 0; border: 0; border-top: 1px solid #dee2e6;">
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/booklist' %}active{% endif %}" href="/booklist">1. 文案管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/txt2voice' %}active{% endif %}" href="/txt2voice">2. 字幕转语音</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/imageslist' %}active{% endif %}" href="/imageslist">3. 字幕生成图片</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/videolist' %}active{% endif %}" href="/videolist">4. 分镜视频管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/videomerge' %}active{% endif %}" href="/videomerge">5. 视频合成</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 右侧内容 -->
+            <div class="col-md main-content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+{% extends "user/base_user.html" %}
+
+{% block title %}我的视频 - 用户中心{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <!-- 页面标题和操作按钮 -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">我的视频</h1>
+      <p class="text-gray-600">管理您创建的所有视频</p>
+    </div>
+    <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+      <i class="fas fa-plus mr-2"></i>创建新视频
+    </a>
+  </div>
+  
+  <!-- 视频列表 -->
+  <div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b">
+      <h2 class="text-lg font-semibold">视频列表</h2>
+    </div>
+    
+    <div class="p-6">
+      <!-- 搜索和筛选 -->
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex space-x-4">
+          <select class="border rounded-lg px-3 py-2">
+            <option>全部状态</option>
+            <option>处理中</option>
+            <option>已完成</option>
+            <option>失败</option>
+          </select>
+          <input type="text" placeholder="搜索视频名称..." class="border rounded-lg px-3 py-2 w-64">
+        </div>
+        <button class="bg-gray-100 px-4 py-2 rounded-lg">
+          <i class="fas fa-filter mr-2"></i>筛选
+        </button>
+      </div>
+      
+      <!-- 视频表格 -->
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-3 px-4">视频名称</th>
+              <th class="text-left py-3 px-4">创建时间</th>
+              <th class="text-left py-3 px-4">状态</th>
+              <th class="text-left py-3 px-4">时长</th>
+              <th class="text-left py-3 px-4">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">
+                <div class="flex items-center">
+                  <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center mr-3">
+                    <i class="fas fa-video text-gray-500"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium">产品宣传视频</p>
+                    <p class="text-sm text-gray-500">MP4 · 1080P</p>
+                  </div>
+                </div>
+              </td>
+              <td class="py-3 px-4">2024-01-15 14:30</td>
+              <td class="py-3 px-4">
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">已完成</span>
+              </td>
+              <td class="py-3 px-4">2分30秒</td>
+              <td class="py-3 px-4">
+                <div class="flex space-x-2">
+                  <button class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <button class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <button class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">
+                <div class="flex items-center">
+                  <div class="w-12 h-12 bg-blue-100 rounded flex items-center justify-center mr-3">
+                    <i class="fas fa-spinner text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium">教学视频制作</p>
+                    <p class="text-sm text-gray-500">处理中...</p>
+                  </div>
+                </div>
+              </td>
+              <td class="py-3 px-4">2024-01-15 10:15</td>
+              <td class="py-3 px-4">
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">处理中</span>
+              </td>
+              <td class="py-3 px-4">-</td>
+              <td class="py-3 px-4">
+                <div class="flex space-x-2">
+                  <button class="text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <button class="text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-download"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- 分页 -->
+      <div class="flex justify-between items-center mt-6">
+        <p class="text-gray-600">显示 1-2 条，共 12 条</p>
+        <div class="flex space-x-2">
+          <button class="px-3 py-1 border rounded">上一页</button>
+          <button class="px-3 py-1 border rounded bg-blue-600 text-white">1</button>
+          <button class="px-3 py-1 border rounded">2</button>
+          <button class="px-3 py-1 border rounded">下一页</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

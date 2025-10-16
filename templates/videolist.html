@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-3">  
+    <div class="row mb-3">
+        <div class="col-md-1 d-flex align-items-center justify-content-center">
+            选择书单：
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" id="bookSelect">
+                <option value="">-- 请选择 --</option>
+            </select>
+        </div>
+        <!-- 添加一个生成视频按钮 -->
+        <div class="col-md-2">
+            <button id="generateVideosBtn" class="btn btn-primary">生成视频</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-striped" id="videosTable">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 50px;">ID</th>
+                    <th style="width: 280px;">段落</th>
+                    <th>视频</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 视频数据将通过JavaScript动态加载 -->
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- 分页控件 -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="dataTables_info" id="videosTable_info" role="status" aria-live="polite">
+                显示 <span id="startRecord">0</span> 到 <span id="endRecord">0</span> 条，共 <span id="totalRecords">0</span> 条
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dataTables_paginate paging_simple_numbers float-end">
+                <ul class="pagination" id="videosPagination">
+                    <li class="page-item disabled" id="prevPage">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item disabled" id="nextPage">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/videolist.js') }}"></script>
+{% endblock %}
