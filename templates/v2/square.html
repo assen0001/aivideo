@@ -5,60 +5,61 @@
     <h1 class="text-3xl font-bold text-gray-800 mb-6">视频广场</h1>
     
     <!-- 搜索和筛选区域 -->
-    <div class="flex justify-between items-center mb-8">
-        <div class="flex space-x-4">
-            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500">全部</a>
-            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500">主题创意</a>
-            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500">字幕配音</a>
-            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500">AI读书</a>
-            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500">古诗解析</a>
-            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500">儿童绘本</a>
+    <div class="flex justify-between items-center mb-8 flex-wrap">
+        <div class="flex space-x-4 mb-4 md:mb-0">
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag active" data-type="">全部</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="theme-creative">主题创意</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="subtitle-video">字幕配音</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="ai-reading">AI读书</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="poetry-analysis">古诗解析</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="children-book">儿童绘本</a>
         </div>
         
-        <div class="flex space-x-2">
-            <input type="text" placeholder="输入关键字" class="px-4 py-2 border rounded-md w-64">
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-md">搜索</button>
+        <div class="flex space-x-2 w-full md:w-auto">
+            <input type="text" id="search-input" placeholder="输入关键字" class="px-4 py-2 border rounded-md w-full md:w-64">
+            <button id="search-btn" class="px-4 py-2 bg-blue-500 text-white rounded-md">搜索</button>
         </div>
     </div>
     
     <!-- 视频列表 -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {% for i in range(20) %}
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <!-- 视频封面 (4:3比例) -->
-            <a href="{{ url_for('videoview') }}" target="_blank" class="relative pt-[75%] bg-gray-200 overflow-hidden block">
-                <img src="{{ url_for('static', filename='images/u266_img.png') }}" class="absolute top-0 left-0 w-full h-full object-cover">
-                <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">05:23</div>
-            </a>
-            
-            <div class="p-4">
-                <div class="flex items-center mb-2">
-                    <!-- 作者头像 -->
-                    <img src="{{ url_for('static', filename='images/avatar.png') }}" class="w-8 h-8 rounded-full mr-2">
-                    <span class="text-sm text-gray-600">作者{{ i+1 }}</span>
-                </div>
-                
-                
-                <p class="text-sm text-gray-600 mb-2">这是视频的简短描述文字，最多显示10个字...</p>
-                
-                <div class="flex justify-between text-xs text-gray-500">
-                    <span>1.2万次播放</span>
-                    <span>3天前</span>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+    <div id="video-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- 视频将通过JavaScript动态加载 -->
     </div>
     
     <!-- 分页 -->
     <div class="flex justify-center mt-8">
-        <nav class="flex items-center space-x-2">
-            <a href="#" class="px-3 py-1 border rounded-md">上一页</a>
-            <a href="#" class="px-3 py-1 border rounded-md bg-blue-500 text-white">1</a>
-            <a href="#" class="px-3 py-1 border rounded-md">2</a>
-            <a href="#" class="px-3 py-1 border rounded-md">3</a>
-            <a href="#" class="px-3 py-1 border rounded-md">下一页</a>
+        <input type="hidden" id="total-pages" value="0">
+        <nav class="pagination flex items-center space-x-2">
+            <!-- 分页按钮将通过JavaScript动态加载 -->
         </nav>
     </div>
 </div>
+
+<!-- 引入JavaScript -->
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/v2/square.js') }}"></script>
+
+<style>
+    /* 筛选标签的活动状态样式 */
+    .filter-tag.active {
+        color: #3b82f6; /* 蓝色 */
+        font-weight: 500;
+        border-bottom: 2px solid #3b82f6;
+    }
+    
+    /* 加载动画样式 */
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+    
+    /* 视频标题截断显示 */
+    .truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
 {% endblock %}
