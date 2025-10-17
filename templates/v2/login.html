@@ -66,7 +66,38 @@
             if (!email || !password) {
                 alert('请填写所有必填字段');
                 e.preventDefault();
+                return;
             }
+            
+            e.preventDefault();
+            
+            // 使用fetch方式提交表单数据
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    remember: document.getElementById('remember').checked
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 把email值保存到cookie中，名称为：user_account，时长为31天
+                    document.cookie = `user_account=${email}; path=/; max-age=31*24*60*60`;
+                    // alert('登录成功！');                    
+                    window.location.href = '/user/dashboard';   // 跳转到用户仪表板
+                } else {
+                    alert(data.message || '登录失败，请重试');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('请求发生错误，请稍后重试');
+            });
         });
     });
 </script>

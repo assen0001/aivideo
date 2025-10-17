@@ -1,7 +1,10 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, session
 import random
 import time
+import hashlib
+import string
 from sendmail import send_verification_code
+from common import get_db_connection
 
 # 创建注册相关的蓝图
 register_bp = Blueprint('register', __name__)
@@ -18,7 +21,7 @@ def register():
 def handle_send_verification_code():
     """处理发送验证码到用户邮箱的请求"""
     try:
-        email = request.form.get('email')
+        email = request.json.get('email') if request.is_json else request.form.get('email')
         if not email:
             return jsonify({'success': False, 'message': '邮箱地址不能为空'})
         
@@ -31,13 +34,12 @@ def handle_send_verification_code():
         # 发送验证码邮件
         try:
             send_verification_code(email, code)
+            # 为了演示，打印验证码到控制台
+            # print(f'发送验证码到 {email}: {code}')
+            return jsonify({'success': True, 'message': '验证码已发送'})
         except Exception as e:
             print(f'发送验证码邮件异常: {str(e)}')
-        
-        # 为了演示，打印验证码到控制台
-        print(f'发送验证码到 {email}: {code}')
-        
-        return jsonify({'success': True, 'message': '验证码已发送'})
+            return jsonify({'success': False, 'message': '发送验证码失败，请稍后重试'})
     except Exception as e:
         print(f'发送验证码失败: {str(e)}')
         return jsonify({'success': False, 'message': '发送验证码失败，请稍后重试'})
@@ -46,9 +48,9 @@ def handle_send_verification_code():
 def process_register():
     """处理注册表单提交"""
     try:
-        email = request.form.get('email')
-        verification_code = request.form.get('verificationCode')
-        agree_terms = request.form.get('agreeTerms')
+        email = request.json.get('email') if request.is_json else request.form.get('email')
+        verification_code = request.json.get('verificationCode') if request.is_json else request.form.get('verificationCode')
+        agree_terms = request.json.get('agreeTerms') if request.is_json else request.form.get('agreeTerms')
         
         # 验证输入
         if not email or not verification_code:
@@ -63,20 +65,77 @@ def process_register():
         
         code_info = verification_codes[email]
         # 检查验证码是否过期（5分钟）
-        if time.time() - code_info['timestamp'] > 300:
+        if time.time() - code_info['timestamp'] > 3000:
             del verification_codes[email]
             return jsonify({'success': False, 'message': '验证码已过期，请重新获取'})
         
         if code_info['code'] != verification_code:
             return jsonify({'success': False, 'message': '验证码错误'})
         
-        # TODO: 实际项目中，这里应该实现用户信息的保存逻辑
-        # 例如：创建用户记录到数据库
+        # 判断数据库是否已存在该邮箱用户
+        connection = get_db_connection()
+        with connection.cursor() as cursor:
+            sql = "SELECT id FROM ai_user WHERE account = %s"
+            cursor.execute(sql, (email,))
+            if cursor.fetchone():
+                return jsonify({'success': False, 'message': '该邮箱已被注册，请登录'})
+
+        # 生成随机密码（10位数字+小写字母）
+        def generate_random_password(length=10):
+            """生成指定长度的随机密码，包含数字和小写字母"""
+            characters = string.ascii_lowercase + string.digits
+            return ''.join(random.choice(characters) for _ in range(length))
         
-        # 注册成功后删除验证码
-        del verification_codes[email]
+        # 生成随机密码
+        plain_password = generate_random_password()
+
+        # 生成呢称（用户名）
+        nickname = "会员" + email.split('@')[0]
         
-        return jsonify({'success': True, 'message': '注册成功'})
+        # 使用MD5加密密码
+        md5_hash = hashlib.md5()
+        md5_hash.update(plain_password.encode('utf-8'))
+        hashed_password = md5_hash.hexdigest()
+        
+        # 获取用户浏览器的user-agent
+        user_agent = request.headers.get('User-Agent', '')
+        # 获取用户IP地址
+        user_ip = request.remote_addr
+        
+        # 保存用户信息到数据库
+        connection = get_db_connection()
+        try:
+            with connection.cursor() as cursor:
+                sql = """INSERT INTO ai_user 
+                        (account, password, pwd2, nickname, user_agent, user_ip) 
+                        VALUES (%s, %s, %s, %s, %s, %s)"""
+                cursor.execute(sql, (email, hashed_password, plain_password, nickname, user_agent, user_ip))
+                connection.commit()
+
+                # 设置session用户信息
+                session['user_account'] = email
+                session['vip'] = 0
+                session['logged_in'] = True
+
+                # 如果选择了记住密码，可以设置session的过期时间
+                if request.json.get('rememberMe') if request.is_json else request.form.get('rememberMe'):
+                    session.permanent = True
+                
+                # 打印用户ID（调试用）
+                # print(f"用户 {email} 注册成功，用户ID: {cursor.lastrowid}")
+
+                # 注册成功后删除验证码
+                del verification_codes[email]
+
+                # 返回注册成功信息
+                return jsonify({'success': True, 'message': '注册成功'})
+        except Exception as e:
+            connection.rollback()
+            print(f"保存用户信息到数据库失败: {str(e)}")
+            return jsonify({'success': False, 'message': '注册失败，请稍后重试'})
+        finally:
+            connection.close()
+
     except Exception as e:
         print(f'注册失败: {str(e)}')
         return jsonify({'success': False, 'message': '注册失败，请稍后重试'})

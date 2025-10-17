@@ -19,17 +19,9 @@
         <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/vip" onclick="setActiveNav(this)">VIP会员</a>
         <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/help" onclick="setActiveNav(this)">帮助中心</a>
       </nav>
-      <!-- CTA Buttons 未登录状态 -->
-      <div class="flex items-center space-x-4">
-        <a class="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="/login" >登录</a>        
-        <a class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-sm hover:shadow" href="/register" >免费注册</a>        
-        <!-- Mobile menu button -->
-        <button class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-primary hover:bg-gray-100 focus:outline-none" id="mobile-menu-button">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
-      </div>
-      <!-- CTA Buttons 已登录状态 -->
-      <!-- 用户区域 -->
+      <!-- CTA Buttons 判断会员登录状态 -->
+      {% if request.cookies.get('user_account') %}
+      <!-- CTA Buttons 已登录状态 -->      
       <div class="flex items-center">
         <button class="p-1 rounded-full text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2" >
           <i class="fas fa-bell"></i>
@@ -42,6 +34,18 @@
           </div>
         </div>
       </div>
+      {% else %}
+      <!-- CTA Buttons 未登录状态 -->
+      <div class="flex items-center space-x-4">
+        <a class="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="/login" >登录</a>        
+        <a class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-sm hover:shadow" href="/register" >免费注册</a>        
+        <!-- Mobile menu button -->
+        <button class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-primary hover:bg-gray-100 focus:outline-none" id="mobile-menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+      {% endif %}
+
     </div>
   </div>
   <!-- Mobile menu, show/hide based on menu state -->

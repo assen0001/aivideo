@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify, render_template, session, redirect, url_for, flash
 import time
+import hashlib
+from common import get_db_connection
 
 # 创建登录相关的蓝图
 login_bp = Blueprint('login', __name__)
@@ -13,48 +15,56 @@ def login():
 def process_login():
     """处理登录表单提交"""
     try:
-        email = request.form.get('email')
-        password = request.form.get('password')
-        remember = request.form.get('remember')
+        email = request.form.get('email') or request.json.get('email')
+        password = request.form.get('password') or request.json.get('password')
+        remember = request.form.get('remember') or request.json.get('remember')
+
+        print(f'登录请求: email={email}, remember={remember}')
         
         # 验证输入
         if not email or not password:
             return render_template('v2/login.html', error='请填写所有必填字段')
         
-        # TODO: 实际项目中，这里应该实现真实的用户认证逻辑
-        # 例如：从数据库查询用户，验证密码哈希等
-        # 这里只是一个示例，实际生产环境需要更安全的实现
-        
-        # 示例验证逻辑（仅用于演示）
-        # 在实际项目中，应该使用数据库和密码哈希验证
-        if email and password:
-            # 模拟数据库查询和验证过程
-            # 这里简单地假设任何非空的邮箱和密码都可以登录（仅用于演示）
+        # 密码用md5加密
+        password = hashlib.md5(password.encode('utf-8')).hexdigest()
+
+        # 查询数据库
+        connection = get_db_connection()
+        with connection.cursor() as cursor:
+            sql = """SELECT id, account, nickname, avatar, status, vip 
+                 FROM ai_user WHERE account = %s AND password = %s"""
+            cursor.execute(sql, (email, password))
+            user = cursor.fetchone()
+            connection.close()
             
-            # 在session中保存用户信息
-            session['user_email'] = email
-            session['logged_in'] = True
-            
-            # 如果选择了记住密码，可以设置session的过期时间
-            # 在实际生产环境中，可能需要使用持久化的session或token
-            if remember:
-                session.permanent = True  # 这会使session在31天后过期，需要在Flask应用中设置app.permanent_session_lifetime
-            
-            # 登录成功后重定向到用户仪表板或首页
-            # 这里暂时重定向到首页
-            return redirect(url_for('index'))
-        else:
-            return render_template('v2/login.html', error='邮箱或密码错误')
+            # 如果查询到用户，说明登录成功
+            if user:
+                # 登录成功后，将用户ID存储在session中
+                session['user_account'] = user['account']
+                session['user_id'] = user['id']
+                session['nickname'] = user['nickname']
+                session['avatar'] = user['avatar']
+                session['status'] = user['status']
+                session['vip'] = user['vip']
+                session['logged_in'] = True
+
+                # 如果选择了记住密码，可以设置session的过期时间
+                if remember:
+                    session.permanent = True  # 这会使session在31天后过期，需要在Flask应用中设置app.permanent_session_lifetime
+
+                return jsonify({'success': True, 'message': '登录成功！'})
+            else:
+                return jsonify({'success': False, 'message': '邮箱或密码错误'})
             
     except Exception as e:
         print(f'登录失败: {str(e)}')
-        return render_template('v2/login.html', error='登录失败，请稍后重试')
+        return jsonify({'success': False, 'message': '登录失败，请稍后重试'})
 
 @login_bp.route('/logout')
 def logout():
     """处理用户登出"""
     # 清除session中的用户信息
-    session.pop('user_email', None)
+    session.pop('user_account', None)
     session.pop('logged_in', None)
     session.clear()
     

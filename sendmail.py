@@ -42,9 +42,15 @@ def send_email(to_email, subject, content):
     message['Subject'] = Header(subject)
     
     try:
-        # 连接邮件服务器并发送邮件
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()  # 启用TLS加密
+        # 根据端口选择不同的连接方式
+        if smtp_port == 465:
+            # 端口465使用SSL加密
+            server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        else:
+            # 其他端口使用常规SMTP并启用TLS加密
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls()  # 启用TLS加密
+        
         server.login(sender, password)
         server.sendmail(sender, [to_email], message.as_string())
         server.quit()
@@ -54,7 +60,7 @@ def send_email(to_email, subject, content):
         print(f'发送邮件失败: {str(e)}')
         return False
 
-def send_verification_code(email, code, expiration_minutes=5):
+def send_verification_code(email, code, expiration_minutes=30):
     """
     发送验证码邮件
     
@@ -66,22 +72,7 @@ def send_verification_code(email, code, expiration_minutes=5):
     Returns:
         bool: 发送成功返回True，失败返回False
     """
-    subject = '您的注册验证码'
-    content = f'您的验证码是：{code}，有效期{expiration_minutes}分钟。请勿将验证码泄露给他人。'
+    subject = 'AIVideo 您的注册验证码'
+    content = f'AIVideo - 一站式全流程AI视频创作平台\n您的验证码是：{code}，有效期{expiration_minutes}分钟。请勿将验证码泄露给他人。'
     
     return send_email(email, subject, content)
-
-# 测试函数，用于验证邮件发送功能
-def test_email_send():
-    """
-    测试邮件发送功能
-    注意：在生产环境中请注释或删除此函数的调用
-    """
-    test_email = input("请输入测试邮箱地址: ")
-    test_code = "123456"  # 测试验证码
-    result = send_verification_code(test_email, test_code)
-    print(f"测试结果: {'成功' if result else '失败'}")
-
-if __name__ == '__main__':
-    # 当直接运行此文件时执行测试
-    test_email_send()
