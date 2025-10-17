@@ -59,17 +59,24 @@
           <!-- 用户信息区域 -->
           <div class="flex items-center space-x-4">
             <!-- 会员类型 -->
+            {% if session.get('vip') == 1 %}
             <div class="flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
               <i class="fas fa-crown mr-1"></i>
               <span>VIP会员</span>
             </div>
+            {% else %}
+            <div class="flex items-center bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              <i class="fas fa-user mr-1"></i>
+              <span>普通会员</span>
+            </div>
+            {% endif %}
             
             <!-- 用户头像和用户名 -->
             <div class="flex items-center space-x-2">
               <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                 <i class="fas fa-user text-white text-sm"></i>
               </div>
-              <span class="text-gray-700 font-medium">{{ current_user.username if current_user else '用户' }}</span>
+              <span class="text-gray-700 font-medium">{{ session['nickname'] if session.get('nickname') else 'null' }}</span>
             </div>
           </div>
         </div>

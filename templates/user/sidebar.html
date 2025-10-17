@@ -3,7 +3,7 @@
   <!-- Logo区域 -->
   <div class="p-4 border-b" style="height: 73px;">
     <a href="/" class="text-xl font-bold text-blue-600 hover:text-blue-700">AIVideo用户中心</a>
-    <p class="text-sm text-gray-500">欢迎回来，{{ current_user.username if current_user else 'assen' }}</p>
+    <p class="text-sm text-gray-500">欢迎回来，{{ session['user_account'] if session.get('user_account') else 'null' }}</p>
   </div>
   
   <!-- 导航菜单 -->

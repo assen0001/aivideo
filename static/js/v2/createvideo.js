@@ -289,6 +289,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     book_id = jobs[0].book_id;   
                     cover_url = jobs[0].videocover_url;   // 封面URL 
                     merge_url = jobs[0].videomerge_url;   // 合并视频URL 
+                    
+                    // 初始化错误重试计数器（使用闭包保存状态）
+                    if (typeof checkVideoStatus.errorRetryCount === 'undefined') {
+                        checkVideoStatus.errorRetryCount = 0;
+                    }
 
                     // 显示生成状态
                     formContent.classList.add('hidden');
@@ -381,38 +386,53 @@ document.addEventListener('DOMContentLoaded', function () {
                                 document.body.removeChild(downloadLink);
                             };
                         }
-                        
+                        // 任务成功时重置计数器
+                        checkVideoStatus.errorRetryCount = 0;
                         return; // 终止轮询
                     }
 
-                    // 任务出错时，重新提交N8N任务
+                    // 任务出错时，重新提交N8N任务，但限制重试次数
                     if (jobs[0].job_status === 4) {
-                        // 重新 调用n8n任务 触发视频生成
-                        const apiUrl = `${N8N_URL}/webhook/c1dad875-725b-4107-8a80-d99f45dbab5f`;    
-                        fetch(apiUrl, {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({ 
-                            redo: 'on',
-                            book_id: book_id,
-                            aibookvideo_url: AIBOOKVIDEO_URL,
-                            n8n_url: N8N_URL,
-                            comfyui_url: COMFYUI_URL,
-                            comfyui_url_wan: COMFYUI_URL_WAN,   
-                            comfyui_url_path: COMFYUI_URL_PATH,                 
-                            indextts_url: INDEXTTS_URL,
-                          })
-                        })
-                        .then(response => response.json())
-                        .catch(n8nError => {
-                          console.error('n8n Error:', n8nError);
-                          // 处理n8n错误
-                        }); 
+                        // 检查重试次数
+                        if (checkVideoStatus.errorRetryCount < 10) {
+                            console.log(`错误重试次数: ${checkVideoStatus.errorRetryCount + 1}/10`);
+                            // 增加重试计数
+                            checkVideoStatus.errorRetryCount++;
+                            
+                            // 重新调用n8n任务触发视频生成
+                            const apiUrl = `${N8N_URL}/webhook/c1dad875-725b-4107-8a80-d99f45dbab5f`;    
+                            fetch(apiUrl, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({ 
+                                redo: 'on',
+                                book_id: book_id,
+                                aibookvideo_url: AIBOOKVIDEO_URL,
+                                n8n_url: N8N_URL,
+                                comfyui_url: COMFYUI_URL,
+                                comfyui_url_wan: COMFYUI_URL_WAN,   
+                                comfyui_url_path: COMFYUI_URL_PATH,                 
+                                indextts_url: INDEXTTS_URL,
+                              })
+                            })
+                            .then(response => response.json())
+                            .catch(n8nError => {
+                              console.error('n8n Error:', n8nError);
+                              // 处理n8n错误
+                            }); 
+                        } else {
+                            console.error('达到最大重试次数(10次)，停止重新提交任务');
+                            showNotification('错误', '视频生成失败，已达到最大重试次数', 'error');
+                            generationStatus.classList.add('hidden');
+                            formContent.classList.remove('hidden');
+                            // 重置计数器
+                            checkVideoStatus.errorRetryCount = 0;
+                        }
 
                         return; // 终止轮询
-                    }
+                    } 
 
                     // 这里增加判断 jobs数组末尾项目job_type的值：
                     if (jobs[jobs.length - 1].job_type === 1) {
