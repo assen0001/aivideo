@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var uploadedImages = document.getElementById('uploaded-images');    // 上传的图片
   var playMusicBtn = document.getElementById('play-music');    // 播放背景音乐按钮
   var pauseMusicBtn = document.getElementById('pause-music');    // 暂停背景音乐按钮  
+  var playNarrationBtn = document.getElementById('play-narration');    // 播放配音按钮
+  var pauseNarrationBtn = document.getElementById('pause-narration');  // 暂停配音按钮
+  var narrationVoiceSelect = document.getElementById('narration-voice');  // 配音选择下拉框
+  var audioPlayer = null;  // 音频播放器对象
   var notificationModal = document.getElementById('notification-modal');    // 通知弹窗
   var modalCloseBtn = document.getElementById('modal-close');    // 弹窗关闭按钮
   var modalTitle = document.getElementById('modal-title');    // 弹窗标题
@@ -494,16 +498,103 @@ document.addEventListener('DOMContentLoaded', function () {
     window.location.href = '/createvideo';
   });
 
-  // 背景音乐播放/暂停按钮切换
+  // 背景音乐播放功能
   playMusicBtn.addEventListener('click', function () {
-    playMusicBtn.classList.add('hidden');
-    pauseMusicBtn.classList.remove('hidden');
-    showNotification('提示', '背景音乐预览功能即将上线', 'info');
+    // 获取选中的背景音乐选项
+    const musicSelect = document.getElementById('background-music');
+    const selectedMusic = musicSelect.value;
+    
+    // 检查是否选择了有效的背景音乐（不是"无背景音乐"选项）
+    if (selectedMusic !== 'none') {
+      // 构建音乐文件的URL路径
+      const musicUrl = `/static/speaker/${selectedMusic}`;
+      
+      // 如果音频播放器已存在，先停止它
+      if (audioPlayer) {
+        audioPlayer.pause();
+      }
+      
+      // 创建新的音频播放器并播放
+      audioPlayer = new Audio(musicUrl);
+      audioPlayer.play()
+        .then(() => {
+          // 切换按钮显示状态
+          playMusicBtn.classList.add('hidden');
+          pauseMusicBtn.classList.remove('hidden');
+          
+          // 监听音频播放结束事件
+          audioPlayer.onended = function() {
+            // 恢复按钮状态
+            pauseMusicBtn.classList.add('hidden');
+            playMusicBtn.classList.remove('hidden');
+          };
+        })
+        .catch(error => {
+          console.error('播放背景音乐失败:', error);
+          showNotification('错误', '播放背景音乐失败', 'error');
+        });
+    }
   });
 
+  // 背景音乐暂停功能
   pauseMusicBtn.addEventListener('click', function () {
+    if (audioPlayer) {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0; // 重置播放进度
+    }
     pauseMusicBtn.classList.add('hidden');
     playMusicBtn.classList.remove('hidden');
+  });
+  
+  // 配音播放按钮点击事件
+  playNarrationBtn.addEventListener('click', function () {
+    // 获取选中的配音文件
+    var selectedVoice = narrationVoiceSelect.value;
+    
+    // 如果选中的是"无配音"，则不执行操作
+    if (selectedVoice === 'none') {
+      return;
+    }
+    
+    // 构建音频文件URL
+    var audioUrl = '/static/speaker/' + selectedVoice;
+    
+    // 创建或重置音频播放器
+    if (audioPlayer) {
+      audioPlayer.pause();
+      audioPlayer = null;
+    }
+    
+    // 创建新的音频播放器实例
+    audioPlayer = new Audio(audioUrl);
+    
+    // 播放音频
+    audioPlayer.play().then(function() {
+      // 切换按钮显示状态
+      playNarrationBtn.classList.add('hidden');
+      pauseNarrationBtn.classList.remove('hidden');
+      
+      // 音频播放结束时切换按钮状态
+      audioPlayer.onended = function() {
+        pauseNarrationBtn.classList.add('hidden');
+        playNarrationBtn.classList.remove('hidden');
+      };
+    }).catch(function(error) {
+      console.error('播放失败:', error);
+    });
+  });
+  
+  // 配音停止按钮点击事件
+  pauseNarrationBtn.addEventListener('click', function () {
+    // 停止音频播放
+    if (audioPlayer) {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0; // 重置到开始位置
+    }
+    
+    // 切换按钮显示状态
+    pauseNarrationBtn.classList.add('hidden');
+    playNarrationBtn.classList.remove('hidden');
   });
 
 });

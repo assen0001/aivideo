@@ -9,7 +9,6 @@ from autovideo import autovideo_bp
 from autovideo_list import autovideo_list_bp
 from register import register_bp
 from login import login_bp
-import os
 import secrets
 
 app = Flask(__name__)
@@ -55,7 +54,7 @@ def createvideo():
 
 @app.route('/square')
 def square():
-    return render_template('v2/videolist.html')
+    return render_template('v2/square.html')
 
 @app.route('/vip')
 def vip():

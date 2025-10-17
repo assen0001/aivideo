@@ -121,7 +121,7 @@ def create_book_tts():
         # 从POST请求体中获取参数
         data = request.get_json()
         book_id = data.get('book_id')   # 书单编号
-        speaker_wav = data.get('speaker_wav', "JackMa_mayun.mp3")  # 默认音色 JackMa_mayun.mp3
+        speaker_wav = data.get('speaker_wav', "none")  # 配音音色
         # speed = data.get('speed', 1.2)   # 默认语速 1.2
         music_wav = data.get('music_wav', "none")  # 默认背景音乐 none
         
