@@ -116,8 +116,8 @@ def process_register():
                 session['user_account'] = email
                 session['user_id'] = cursor.lastrowid
                 session['nickname'] = nickname
-                session['avatar'] = None
-                session['status'] = 1
+                session['avatar'] = "static/images/avatar.png"
+                session['status'] = 0
                 session['vip'] = 0
                 session['logged_in'] = True
 

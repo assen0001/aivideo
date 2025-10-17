@@ -257,4 +257,4 @@ def process_videos(video_urls, title_txt, author_txt, texts, video_aspect, time_
     
     print(f"视频合成完成，保存路径: {output_filename}")
     # 返回视频文件名和封面图片文件名
-    return video_filename, cover_filename
+    return video_filename, cover_filename, audio_duration

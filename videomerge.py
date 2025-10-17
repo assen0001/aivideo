@@ -113,7 +113,7 @@ def create_video():
         
         # 调用视频合成函数
         print(f"开始合成视频...")
-        video_filename, cover_filename = process_videos(
+        video_filename, cover_filename, audio_duration = process_videos(
             video_urls=video_urls, 
             title_txt=title_txt,
             author_txt=author_txt, 
@@ -127,9 +127,9 @@ def create_video():
         
         # 保存结果到数据库
         cursor.execute("""
-            INSERT INTO ai_videomerge (book_id, videomerge_url, videocover_url)
-            VALUES (%s, %s, %s)
-        """, (data['book_id'], video_filename, cover_filename))
+            INSERT INTO ai_videomerge (book_id, videomerge_url, videocover_url, play_time)
+            VALUES (%s, %s, %s, %s)
+        """, (data['book_id'], video_filename, cover_filename, audio_duration))
 
         # 更新书单状态为已合并
         cursor.execute("""

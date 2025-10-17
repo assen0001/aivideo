@@ -10,6 +10,7 @@ from autovideo_list import autovideo_list_bp
 from register import register_bp
 from login import login_bp
 from square import square_bp
+from videoview import videoview_bp
 import secrets
 
 app = Flask(__name__)
@@ -36,6 +37,7 @@ app.register_blueprint(autovideo_list_bp)
 app.register_blueprint(register_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(square_bp)
+app.register_blueprint(videoview_bp)
 
 @app.route('/')
 def index():

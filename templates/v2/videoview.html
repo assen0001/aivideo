@@ -18,104 +18,102 @@
             <!-- 左侧视频区域 -->
             <div class="lg:col-span-2">
                 <!-- 视频播放器 -->
-                <div class="bg-black rounded-lg overflow-hidden mb-6">
-                    <div class="relative pt-[56.25%] bg-gray-900">
-                        <!-- 视频封面 -->
-                        <img src="{{ url_for('static', filename='images/u266_img.png') }}" 
-                             class="absolute top-0 left-0 w-full h-full object-cover" 
-                             id="videoCover">
-                        
-                        <!-- 视频播放器 -->
-                        <video class="absolute top-0 left-0 w-full h-full hidden" 
-                               id="videoPlayer" 
-                               controls>
-                            <source src="#" type="video/mp4">
-                            您的浏览器不支持视频播放。
-                        </video>
-                        
-                        <!-- 播放按钮 -->
-                        <div class="absolute inset-0 flex items-center justify-center cursor-pointer" 
-                             id="playButton">
-                            <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all">
-                                <i class="fas fa-play text-white text-3xl ml-1"></i>
-                            </div>
-                        </div>
-                        
-                        <!-- 视频时长 -->
-                        <div class="absolute bottom-4 right-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
-                            <i class="fas fa-clock mr-1"></i>
-                            <span id="videoDuration">05:23</span>
-                        </div>
+        <div class="bg-black rounded-lg overflow-hidden mb-6">
+            <div class="relative pt-[56.25%] bg-gray-900">
+                <!-- 视频封面 -->
+                <img src="{{ url_for('static', filename=video.videocover_url.split('static/')[1]) if video.videocover_url.startswith('static/') else video.videocover_url }}" 
+                     class="absolute top-0 left-0 w-full h-full object-cover" 
+                     id="videoCover">
+                
+                <!-- 视频播放器 -->
+                <video class="absolute top-0 left-0 w-full h-full hidden" 
+                       id="videoPlayer" 
+                       controls>
+                    <source src="{{ url_for('static', filename=video.videomerge_url.split('static/')[1]) if video.videomerge_url.startswith('static/') else video.videomerge_url }}" type="video/mp4">
+                    您的浏览器不支持视频播放。
+                </video>
+                
+                <!-- 播放按钮 -->
+                <div class="absolute inset-0 flex items-center justify-center cursor-pointer" 
+                     id="playButton">
+                    <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all">
+                        <i class="fas fa-play text-white text-3xl ml-1"></i>
                     </div>
                 </div>
+                
+                <!-- 视频时长 -->
+                <div class="absolute bottom-4 right-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-clock mr-1"></i>
+                    <span id="videoDuration">{{ video.play_time }}</span>
+                </div>
+            </div>
+        </div>
 
-                <!-- 视频信息 -->
-                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-4">AI生成的创意视频展示</h1>
-                    
-                    <!-- 作者信息 -->
-                    <div class="flex items-center mb-6">
-                        <img src="{{ url_for('static', filename='images/avatar.png') }}" 
-                             class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <div class="font-medium text-gray-800">AI视频创作者</div>
-                            <div class="text-sm text-gray-500">3天前发布</div>
-                        </div>
-                        <div class="ml-auto flex space-x-3">
-                            <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                <i class="fas fa-heart mr-2"></i>点赞
-                            </button>
-                            <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                                <i class="fas fa-share mr-2"></i>分享
-                            </button>
-                        </div>
-                    </div>
+        <!-- 视频信息 -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ video.book_note.split('\n')[0] if '\n' in video.book_note else video.book_note[:50] }}</h1>
+            
+            <!-- 作者信息 -->
+            <div class="flex items-center mb-6">
+                <img src="{{ url_for('static', filename=video.avatar.split('static/')[1]) if video.avatar.startswith('static/') else video.avatar }}" 
+                     class="w-12 h-12 rounded-full mr-4">
+                <div>
+                    <div class="font-medium text-gray-800">{{ video.nickname }}</div>
+                    <div class="text-sm text-gray-500">{{ video.create_time }}发布</div>
+                </div>
+                <div class="ml-auto flex space-x-3">
+                    <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                        <i class="fas fa-heart mr-2"></i>点赞
+                    </button>
+                    <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-share mr-2"></i>分享
+                    </button>
+                </div>
+            </div>
 
-                    <!-- 视频详情字段 -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <div class="text-gray-500 mb-1">视频类型</div>
-                            <div class="font-medium">创意短视频</div>
-                        </div>
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <div class="text-gray-500 mb-1">视频比例</div>
-                            <div class="font-medium">16:9</div>
-                        </div>
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <div class="text-gray-500 mb-1">视频时长</div>
-                            <div class="font-medium">5分23秒</div>
-                        </div>
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <div class="text-gray-500 mb-1">视频风格</div>
-                            <div class="font-medium">现代简约</div>
-                        </div>
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <div class="text-gray-500 mb-1">字幕配音</div>
-                            <div class="font-medium">中文配音</div>
-                        </div>
-                        <div class="bg-gray-50 p-3 rounded-lg">
-                            <div class="text-gray-500 mb-1">背景音乐</div>
-                            <div class="font-medium">轻音乐</div>
-                        </div>
-                    </div>
+            <!-- 视频详情字段 -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频类型</div>
+                    <div class="font-medium">{{ video.video_type }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频比例</div>
+                    <div class="font-medium">{{ video.video_aspect }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频时长</div>
+                    <div class="font-medium">{{ video.play_time }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频风格</div>
+                    <div class="font-medium">{{ video.video_style }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">字幕配音</div>
+                    <div class="font-medium">{{ video.video_voice }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">背景音乐</div>
+                    <div class="font-medium">{{ video.video_music }}</div>
+                </div>
+            </div>
 
-                    <!-- 文本内容 -->
-                    <div class="mt-6">
-                        <h3 class="text-lg font-semibold mb-3">视频内容描述</h3>
-                        <div class="text-gray-700 leading-relaxed">
-                            这是一个通过AI技术生成的创意视频，展示了现代科技与艺术的完美结合。
-                            视频内容涵盖了多个场景，包括城市风光、自然景观和创意动画等。
-                            通过先进的AI算法，我们能够快速生成高质量的视频内容，满足不同用户的需求。
-                        </div>
-                    </div>
+            <!-- 文本内容 -->
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold mb-3">视频内容描述</h3>
+                <div class="text-gray-700 leading-relaxed">
+                    {{ video.book_content }}
+                </div>
+            </div>
 
-                    <!-- 播放统计 -->
-                    <div class="mt-6 pt-6 border-t border-gray-200">
-                        <div class="flex items-center text-gray-500 text-sm">
-                            <i class="fas fa-eye mr-2"></i>
-                            <span>播放次数：<span class="font-medium">12,345</span> 次</span>
-                        </div>
-                    </div>
+            <!-- 播放统计 -->
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="flex items-center text-gray-500 text-sm">
+                    <i class="fas fa-eye mr-2"></i>
+                    <span>播放次数：<span class="font-medium">{{ '{:,}'.format(video.views) }}</span> 次</span>
+                </div>
+            </div>
                 </div>
             </div>
 
