@@ -21,6 +21,7 @@ db_config = {
     'COMFYUI_URL_PATH': os.getenv('COMFYUI_URL_PATH').rstrip('/') if os.getenv('COMFYUI_URL_PATH') else None
 }
 
+# 修改 get_db_connection 函数，添加超时设置和连接池参数
 def get_db_connection():
     return pymysql.connect(
         host=db_config['ZC_MYSQL_SERVER'],
@@ -29,7 +30,13 @@ def get_db_connection():
         database=db_config['ZC_MYSQL_NAME'],
         port=int(db_config['ZC_MYSQL_PORT']),
         charset='utf8mb4',
-        cursorclass=pymysql.cursors.DictCursor
+        cursorclass=pymysql.cursors.DictCursor,
+        # 添加以下参数
+        connect_timeout=30,       # 连接超时时间
+        read_timeout=60,          # 读取超时时间
+        write_timeout=60,         # 写入超时时间
+        autocommit=False,         # 保持事务控制
+        client_flag=pymysql.constants.CLIENT.MULTI_STATEMENTS  # 允许多条语句
     )
 
 def get_config():

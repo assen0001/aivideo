@@ -58,15 +58,18 @@ def delete_videomerge():
 @videomerge_bp.route('/create_video', methods=['POST'])
 def create_video():
     data = request.get_json()
-    if not data or 'book_id' not in data:  
-        print(f"no book_id: {data['book_id']}")      
+    if not data or 'book_id' not in data:
+        print(f"no book_id: {data.get('book_id')}")      
         return jsonify({'error': 'book_id参数缺失'}), 400
     else:
        print(f"create_video book_id: {data['book_id']}")
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    # 视频处理逻辑移到数据库操作之前，避免长时间占用连接
     try:
+        # 先进行所有需要数据库的查询操作
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
         # 查询分镜视频
         cursor.execute("""
             SELECT video_url FROM ai_videolist WHERE book_id = %s and video_status = 1
@@ -111,7 +114,11 @@ def create_video():
         video_aspect = voice_row[0]['video_aspect']
         print(f"查询语音文件：{audio_url}")
         
-        # 调用视频合成函数
+        # 先关闭连接，避免长时间占用
+        cursor.close()
+        conn.close()
+        
+        # 调用视频合成函数（耗时操作）
         print(f"开始合成视频...")
         video_filename, cover_filename, audio_duration = process_videos(
             video_urls=video_urls, 
@@ -124,6 +131,10 @@ def create_video():
             audio_url=audio_url
         )
         print(f"合成视频完成：{video_filename}")
+        
+        # 完成视频处理后，重新建立连接进行数据库更新
+        conn = get_db_connection()
+        cursor = conn.cursor()
         
         # 保存结果到数据库
         cursor.execute("""
@@ -140,11 +151,18 @@ def create_video():
         
         return jsonify({'success': True})
     except Exception as e:
-        conn.rollback()
+        if 'conn' in locals():
+            try:
+                conn.rollback()
+            except:
+                # 如果回滚失败，记录错误但不抛出新异常
+                print(f"回滚失败: {str(e)}")
         print(f"Error creating video: {str(e)}")
         import traceback
         traceback.print_exc()
         return jsonify({'error': f"视频合成失败: {str(e)}"}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()

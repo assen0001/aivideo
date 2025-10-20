@@ -277,6 +277,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   checkVideoStatus(0);    // 检查视频状态，0 表示默认值
 
+  // 初始化错误重试计数器（使用闭包保存状态）
+  if (typeof checkVideoStatus.errorRetryCount === 'undefined') {
+      checkVideoStatus.errorRetryCount = 0;
+  }
+
   // 定时任务：检查任务状态和进度条更新
   function checkVideoStatus(book_id) {
     console.log("book_id:", book_id);
@@ -293,11 +298,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     book_id = jobs[0].book_id;   
                     cover_url = jobs[0].videocover_url;   // 封面URL 
                     merge_url = jobs[0].videomerge_url;   // 合并视频URL 
-                    
-                    // 初始化错误重试计数器（使用闭包保存状态）
-                    if (typeof checkVideoStatus.errorRetryCount === 'undefined') {
-                        checkVideoStatus.errorRetryCount = 0;
-                    }
 
                     // 显示生成状态
                     formContent.classList.add('hidden');
