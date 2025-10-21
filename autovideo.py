@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, session
 from common import get_db_connection
 
 autovideo_bp = Blueprint('autovideo', __name__)
@@ -32,8 +32,8 @@ def create_autovideo():
                 # v2版本
                 sql = """INSERT INTO ai_booklist 
                         (video_aspect, book_author, book_name, book_note, book_supplement_prompt, 
-                         video_music, sdxl_prompt_styler, video_type, video_voice)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                         video_music, sdxl_prompt_styler, video_type, video_voice, vip)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
                 cursor.execute(sql, (
                     data['aspect'],
                     data['book_author'],
@@ -43,7 +43,8 @@ def create_autovideo():
                     data['music'],
                     data['sdxl_prompt_styler'],
                     data['type'],
-                    data['voice']
+                    data['voice'],
+                    session.get('vip', 0)
                 ))
             connection.commit()
             

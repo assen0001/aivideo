@@ -53,7 +53,7 @@ def get_video_detail(video_id):
             'play_time': format_play_time(video['play_time'] or 0),
             'nickname': video['nickname'] or '未知用户',
             'avatar': video['avatar'] or 'static/images/avatar.png',
-            'book_content': truncate_content(video['book_content'] or '', 1000),
+            'book_content': truncate_content((video['book_content'] or '').replace('\n', '<br>'), 1000),
             'book_note': truncate_content(video['book_note'] or '', 200),
             'video_type': get_video_type_display(video['video_type']),
             'video_type_value': video['video_type'],

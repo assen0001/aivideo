@@ -156,8 +156,8 @@ function renderVideoList(videos) {
                     <a href="/videoview?id=${video.id}" target="_blank" class="relative pt-[75%] bg-gray-200 overflow-hidden block">
                         <img src="/${video.videocover_url}" class="absolute top-0 left-0 w-full h-full object-cover">
                         <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
-                            <!-- 这里可以动态添加视频时长，如果有的话 -->
-                            05:23
+                            <!-- 视频时长 -->
+                            ${video.play_time}
                         </div>
                     </a>
                     

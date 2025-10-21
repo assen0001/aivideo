@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
+from flask import Flask, render_template, request, jsonify, flash, redirect, url_for, session
 from flask_cors import CORS 
 from booklist import booklist_bp
+from common import get_db_connection
 from imageslist import imageslist_bp
 from videolist import videolist_bp
 from txt2voice import txt2voice_bp
@@ -16,6 +17,57 @@ import secrets
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(32)  # 设置安全的密钥用于session管理
 app.permanent_session_lifetime = 7 * 24 * 60 * 60  # 设置持久化session的生命周期为7天
+
+# 请求钩子：在每个请求处理前执行
+@app.before_request
+def before_request():
+    """
+    读取客户端cookie中是否有名为user_account的值
+    如果有则从数据库查询用户详细信息并设置完整的session信息
+    如果没有则设置为未登录状态
+    """
+    # 检查session中是否已存在user_account
+    if 'user_account' in session:
+        return
+
+    # 从请求的cookie中获取user_account值
+    user_account = request.cookies.get('user_account')
+    if user_account:
+        print(f"从cookie中获取到user_account: {user_account}")
+        # 如果cookie中存在user_account，则从数据库查询用户详细信息
+        conn = None
+        try:
+            # 获取数据库连接
+            conn = get_db_connection()
+            with conn.cursor() as cursor:
+                # 执行SQL查询获取用户信息
+                sql = "SELECT * FROM ai_user WHERE account = %s"
+                cursor.execute(sql, (user_account,))
+                user = cursor.fetchone()
+                
+                if user:
+                    # 如果用户存在，设置完整的session信息
+                    session['user_account'] = user['account']
+                    session['user_id'] = user['id']
+                    session['nickname'] = user['nickname']
+                    session['avatar'] = user['avatar']
+                    session['status'] = user['status']
+                    session['vip'] = user['vip']
+                    session['logged_in'] = True
+                else:
+                    # 如果用户不存在，设置为未登录状态
+                    session['logged_in'] = False
+        except Exception as e:
+            # 发生错误时，设置为未登录状态
+            print(f"查询用户信息出错: {e}")
+            session['logged_in'] = False
+        finally:
+            # 确保数据库连接被关闭
+            if conn:
+                conn.close()
+    else:
+        # 如果cookie中不存在user_account，则设置为未登录状态
+        session['logged_in'] = False
 
 # 精确配置CORS
 CORS(app, resources={
@@ -67,6 +119,10 @@ def help():
 @app.route('/videoview')
 def videoview():
     return render_template('v2/videoview.html')
+
+@app.route('/download')
+def download():
+    return render_template('v2/download.html')
 
 # ==================== 用户后台页面路由 ====================
 @app.route('/user/dashboard')

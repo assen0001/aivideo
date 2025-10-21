@@ -14,13 +14,13 @@
       </h1>
       <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-500 mb-8 leading-relaxed">只需输入文本，AI即可自动生成专业级视频。无需复杂操作，让创意轻松实现。</p>
       <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-       <a class="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5" href="#">
+       <a class="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5" href="/createvideo">
         <i class="fas fa-magic mr-2"></i>
         开始生成视频
        </a>
-       <a class="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm hover:shadow" href="javascript:void(0);">
+       <a class="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm hover:shadow" href="/square">
         <i class="fas fa-play-circle mr-2 text-primary"></i>
-        观看演示
+        观看案例
        </a>
       </div>
       <div class="flex items-center justify-center space-x-8 text-sm text-gray-500">
@@ -30,7 +30,7 @@
        </div>
        <div class="flex items-center">
         <i class="fas fa-check-circle text-secondary mr-2"></i>
-        <span>5分钟快速生成</span>
+        <span>AI智能文案编剧</span>
        </div>
        <div class="flex items-center">
         <i class="fas fa-check-circle text-secondary mr-2"></i>
@@ -38,18 +38,33 @@
        </div>
       </div>
      </div>
-     <!-- Hero Image -->
+     <!-- Hero Image/Video Container -->
      <div class="relative max-w-4xl mx-auto mt-12 rounded-xl overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.01] duration-500" style="height: 500px;">
-      <img alt="AI视频生成平台界面展示" class="w-full h-auto object-cover" src="/static/images/demo_cover.png"/>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
-       <div class="p-6 text-white">
-        <h3 class="text-xl font-bold mb-2">AI视频生成演示</h3>
-        <p class="mb-4">只需输入文本，AI即可自动创建专业视频</p>
-        <button class="flex items-center bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors px-4 py-2 rounded-full">
-         <i class="fas fa-play mr-1"></i>
-         观看完整演示
-        </button>
-       </div>
+      <!-- 初始显示的图片 -->
+      <div id="demoImageContainer" class="absolute inset-0">
+        <img alt="AI视频生成平台界面展示" class="w-full h-full object-cover" src="/static/images/demo_cover.png"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
+         <div class="p-6 text-white">
+          <h3 class="text-xl font-bold mb-2">AI视频生成演示</h3>
+          <p class="mb-4">只需输入文本，AI即可自动创建专业视频</p>
+          <button id="playDemoBtn" class="flex items-center bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors px-4 py-2 rounded-full">
+           <i class="fas fa-play mr-1"></i>
+           观看完整视频
+          </button>
+         </div>
+        </div>
+      </div>
+      
+      <!-- 点击后显示的视频播放器 -->
+      <div id="demoVideoContainer" class="absolute inset-0 hidden">
+        <div class="absolute top-4 right-4 z-10">
+          <button id="backToImageBtn" class="bg-black/60 text-white hover:bg-black/80 transition-colors p-2 rounded-full">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <video id="demoVideo" class="w-full h-full object-cover" controls>
+          <!-- 点击后才会加载视频 -->
+        </video>
       </div>
      </div>
     </div>
@@ -78,49 +93,49 @@
       </div>
       <!-- Feature Card 2 -->
       <div class="bg-white rounded-xl shadow-card p-6 transition-all hover:shadow-hover transform hover:-translate-y-1">
+       <div class="w-14 h-14 bg-yellow-100 rounded-lg flex items-center justify-center mb-6">
+        <i class="fas fa-templates text-2xl text-yellow-500"></i>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900 mb-3">丰富视频模板</h3>
+       <p class="text-gray-500 mb-4">提供多样化视频模板，涵盖不同行业主题创意类型，助力您一键快速生成不同场景的专业视频。</p>
+       <a class="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors" href="javascript:void(0);">
+        浏览模板库
+        <i class="fas fa-arrow-right ml-2 text-sm"></i>
+       </a>
+      </div>  
+      <!-- Feature Card 3 -->    
+      <div class="bg-white rounded-xl shadow-card p-6 transition-all hover:shadow-hover transform hover:-translate-y-1">
        <div class="w-14 h-14 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
         <i class="fas fa-paint-brush text-2xl text-secondary"></i>
        </div>
        <h3 class="text-xl font-bold text-gray-900 mb-3">多种风格选择</h3>
-       <p class="text-gray-500 mb-4">提供写实、卡通、动漫、水彩等多种艺术风格，满足不同场景和品牌的视频创作需求。</p>
+       <p class="text-gray-500 mb-4">提供写实、卡通、电影、科幻等多种艺术风格，满足不同场景和品牌的视频创作需求。</p>
        <a class="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors" href="javascript:void(0);">
         查看所有风格
         <i class="fas fa-arrow-right ml-2 text-sm"></i>
        </a>
       </div>
-      <!-- Feature Card 3 -->
+      <!-- Feature Card 4 -->
       <div class="bg-white rounded-xl shadow-card p-6 transition-all hover:shadow-hover transform hover:-translate-y-1">
        <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
         <i class="fas fa-microphone text-2xl text-accent"></i>
        </div>
        <h3 class="text-xl font-bold text-gray-900 mb-3">智能语音合成</h3>
-       <p class="text-gray-500 mb-4">内置多种AI语音，支持文本转语音功能，为您的视频添加自然流畅的旁白解说。</p>
+       <p class="text-gray-500 mb-4">内置多种AI语音，支持文本转语音功能，为您的视频添加自然流畅的配音解说。</p>
        <a class="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors" href="javascript:void(0);">
         试听语音效果
         <i class="fas fa-arrow-right ml-2 text-sm"></i>
        </a>
       </div>
-      <!-- Feature Card 4 -->
+      <!-- Feature Card 5 -->
       <div class="bg-white rounded-xl shadow-card p-6 transition-all hover:shadow-hover transform hover:-translate-y-1">
        <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-6">
         <i class="fas fa-images text-2xl text-green-500"></i>
        </div>
-       <h3 class="text-xl font-bold text-gray-900 mb-3">自定义素材上传</h3>
-       <p class="text-gray-500 mb-4">支持上传图片、视频和音频素材，AI会智能融合您的素材与生成内容，打造专属视频。</p>
+       <h3 class="text-xl font-bold text-gray-900 mb-3">适配主流平台</h3>
+       <p class="text-gray-500 mb-4">提供多种视频比例选择，包括横向和竖向格式，完美适配抖音、B站、小红书、今日头条等主流视频平台。</p>
        <a class="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors" href="javascript:void(0);">
-        了解上传规范
-        <i class="fas fa-arrow-right ml-2 text-sm"></i>
-       </a>
-      </div>
-      <!-- Feature Card 5 -->
-      <div class="bg-white rounded-xl shadow-card p-6 transition-all hover:shadow-hover transform hover:-translate-y-1">
-       <div class="w-14 h-14 bg-yellow-100 rounded-lg flex items-center justify-center mb-6">
-        <i class="fas fa-templates text-2xl text-yellow-500"></i>
-       </div>
-       <h3 class="text-xl font-bold text-gray-900 mb-3">丰富模板库</h3>
-       <p class="text-gray-500 mb-4">提供多种行业模板，包括营销推广、教育培训、产品介绍等，一键快速生成专业视频。</p>
-       <a class="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors" href="javascript:void(0);">
-        浏览模板库
+        了解更多
         <i class="fas fa-arrow-right ml-2 text-sm"></i>
        </a>
       </div>
@@ -159,30 +174,30 @@
          <!-- 步骤1 -->
          <div class="step-item flex flex-col items-center" data-step="1">
           <div class="step-icon w-16 h-16 rounded-full border-4 step-active flex items-center justify-center mb-4">
-           <i class="fas fa-file-alt text-2xl"></i>
+           <i class="fas fa-check-square text-2xl"></i>
           </div>
-          <h4 class="text-sm font-medium text-center">输入文本内容</h4>
+          <h4 class="text-sm font-medium text-center">选择视频模板</h4>
          </div>
          <!-- 步骤2 -->
          <div class="step-item flex flex-col items-center" data-step="2">
           <div class="step-icon w-16 h-16 rounded-full border-4 step-pending flex items-center justify-center mb-4">
-           <i class="fas fa-cloud-upload-alt text-2xl"></i>
+           <i class="fas fa-file-alt text-2xl"></i>
           </div>
-          <h4 class="text-sm font-medium text-center">上传参考图片</h4>
+          <h4 class="text-sm font-medium text-center">输入文本内容</h4>
          </div>
          <!-- 步骤3 -->
          <div class="step-item flex flex-col items-center" data-step="3">
           <div class="step-icon w-16 h-16 rounded-full border-4 step-pending flex items-center justify-center mb-4">
            <i class="fas fa-crop text-2xl"></i>
           </div>
-          <h4 class="text-sm font-medium text-center">选择比例时长</h4>
+          <h4 class="text-sm font-medium text-center">确定视频比例和风格</h4>
          </div>        
          <!-- 步骤4 -->
          <div class="step-item flex flex-col items-center" data-step="4">
           <div class="step-icon w-16 h-16 rounded-full border-4 step-pending flex items-center justify-center mb-4">
            <i class="fas fa-palette text-2xl"></i>
           </div>
-          <h4 class="text-sm font-medium text-center">选择风格配乐</h4>
+          <h4 class="text-sm font-medium text-center">选择配音和背景音乐</h4>
          </div>
          <!-- 步骤5 -->
          <div class="step-item flex flex-col items-center" data-step="5">
@@ -199,29 +214,29 @@
        <div class="flex items-start">
         <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mr-4">1</div>
         <div>
-         <h3 class="text-xl font-semibold text-gray-900 mb-2">输入视频文本内容</h3>
-         <p class="text-gray-600">详细描述您想要生成的视频内容，包括场景、角色、动作和情感等要素，AI将根据您的描述创建视频。</p>
+         <h3 class="text-xl font-semibold text-gray-900 mb-2">选择视频模板</h3>
+         <p class="text-gray-600">选择视频模板类型（包括主题创意、字幕配音、AI读书、古诗词解析、儿童绘本）等，能创作不同行业、不同类型的视频。</p>
         </div>
        </div>
        <div class="flex items-start">
         <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mr-4">2</div>
         <div>
-         <h3 class="text-xl font-semibold text-gray-900 mb-2">上传参考图片（可选）</h3>
-         <p class="text-gray-600">上传参考图片可以帮助AI更好地理解您的需求，生成符合您期望风格的视频内容。</p>
+         <h3 class="text-xl font-semibold text-gray-900 mb-2">输入视频文本内容</h3>
+         <p class="text-gray-600">详细描述您想要生成的视频内容，包括场景、角色、动作和情感等要素，AI将根据您的描述创建视频。</p>
         </div>
        </div>
        <div class="flex items-start">
         <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mr-4">3</div>
         <div>
-         <h3 class="text-xl font-semibold text-gray-900 mb-2">选择视频比例和时长</h3>
-         <p class="text-gray-600">根据您的使用场景选择合适的视频比例（横向16:9或竖向9:16）和时长，免费会员默认30秒，VIP会员时长不限。</p>
+         <h3 class="text-xl font-semibold text-gray-900 mb-2">确定视频比例和风格</h3>
+         <p class="text-gray-600">根据您的使用场景选择合适的视频比例（横向16:9或竖向9:16）和视频风格（卡通、写实等）。</p>
         </div>
        </div>
        <div class="flex items-start">
         <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mr-4">4</div>
         <div>
-         <h3 class="text-xl font-semibold text-gray-900 mb-2">选择视频风格、字幕配音、背景音乐</h3>
-         <p class="text-gray-600">选择适合您视频内容的风格、字幕和背景音乐，打造专业级视频效果。</p>
+         <h3 class="text-xl font-semibold text-gray-900 mb-2">选择视频字幕配音、背景音乐</h3>
+         <p class="text-gray-600">选择适合您视频内容AI语音和背景音乐，打造专业级视频效果。</p>
         </div>
        </div>
        <div class="flex items-start">
@@ -338,7 +353,7 @@
       </div>
      </div>
      <div class="text-center mt-12">
-      <a class="inline-flex items-center px-6 py-3 text-lg font-medium text-primary bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-all" href="javascript:void(0);">
+      <a class="inline-flex items-center px-6 py-3 text-lg font-medium text-primary bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-all" href="/square">
        查看更多案例
        <i class="fas fa-arrow-right ml-2"></i>
       </a>
@@ -346,131 +361,6 @@
     </div>
    </section>
    <!-- [/MODULE] f4g_使用案例 -- 展示不同行业的AI视频生成成功案例，包括产品营销、教育培训和社交媒体内容 -->
-   <!-- [MODULE] g5h_价格方案 -->
-   <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-     <div class="text-center max-w-3xl mx-auto mb-16">
-      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-900 mb-4">选择适合您的方案</h2>
-      <p class="text-lg text-gray-500 mb-8">灵活的价格方案满足个人和企业的不同需求</p>
-      <div class="inline-flex p-1 bg-white rounded-lg shadow-sm border border-gray-200">
-       <button class="px-6 py-2 text-sm font-medium text-primary bg-primary/5 rounded-md" id="monthly-billing">月付</button>
-       <button class="px-6 py-2 text-sm font-medium text-gray-500 hover:text-gray-700" id="yearly-billing">年付<span class="ml-1 text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded-full">省20%</span></button>
-      </div>
-     </div>
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <!-- Free Plan -->
-      <div class="bg-white rounded-2xl shadow-card p-8 transition-all hover:shadow-hover">
-       <h3 class="text-xl font-bold text-gray-900 mb-2">免费版</h3>
-       <p class="text-gray-500 mb-6">适合初次体验AI视频生成</p>
-       <div class="mb-6">
-        <span class="text-4xl font-bold text-gray-900">¥0</span>
-        <span class="text-gray-500">/永久</span>
-       </div>
-       <ul class="space-y-4 mb-8">
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">每月生成3个视频</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">最长视频时长30秒</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">480P标清视频</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">基础风格模板</span>
-        </li>
-        <li class="flex items-start text-gray-400">
-         <i class="fas fa-times mt-1 mr-3"></i>
-         <span>自定义素材上传</span>
-        </li>
-        <li class="flex items-start text-gray-400">
-         <i class="fas fa-times mt-1 mr-3"></i>
-         <span>无水印导出</span>
-        </li>
-       </ul>
-       <a class="block w-full py-3 text-center font-medium text-primary border border-primary rounded-lg hover:bg-primary/5 transition-colors" href="javascript:void(0);">免费开始使用</a>
-      </div>
-      <!-- Pro Plan -->
-      <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-primary relative transform md:-translate-y-4 transition-all hover:shadow-2xl">     
-       <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1 rounded-bl-lg">最受欢迎</div>
-       <h3 class="text-xl font-bold text-gray-900 mb-2">专业版</h3>
-       <p class="text-gray-500 mb-6">适合个人创作者和小型团队</p>
-       <div class="mb-6">
-        <span class="text-4xl font-bold text-gray-900">¥198</span>
-        <span class="text-gray-500">/月</span>
-       </div>
-       <ul class="space-y-4 mb-8">
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">每月生成30个视频</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">最长视频时长3分钟</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">720P高清视频</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">全部风格模板</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">自定义素材上传</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">无水印导出</span>
-        </li>
-       </ul>
-       <a class="block w-full py-3 text-center font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl" href="javascript:void(0);">选择专业版</a>
-      </div>
-      <!-- Business Plan -->
-      <div class="bg-white rounded-2xl shadow-card p-8 transition-all hover:shadow-hover">
-       <h3 class="text-xl font-bold text-gray-900 mb-2">尊享版</h3>
-       <p class="text-gray-500 mb-6">适合企业级视频营销需求</p>
-       <div class="mb-6">
-        <span class="text-4xl font-bold text-gray-900">¥498</span>
-        <span class="text-gray-500">/月</span>
-       </div>
-       <ul class="space-y-4 mb-8">
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">每月生成100个视频</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">最长视频时长10分钟</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">1080P高清视频</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">专属定制模板</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">品牌定制功能</span>
-        </li>
-        <li class="flex items-start">
-         <i class="fas fa-check text-secondary mt-1 mr-3"></i>
-         <span class="text-gray-700">优先技术支持</span>
-        </li>
-       </ul>
-       <a class="block w-full py-3 text-center font-medium text-primary border border-primary rounded-lg hover:bg-primary/5 transition-colors" href="javascript:void(0);">联系销售团队</a>
-      </div>
-     </div>
-    </div>
-   </section>
-   <!-- [/MODULE] g5h_价格方案 -- 展示免费版、专业版和企业版三种价格方案及其功能对比 -->
    <!-- [MODULE] h6i_用户评价 -->
    <section class="py-16 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -545,17 +435,7 @@
        </div>
       </div>
      </div>
-     <!-- Logo Cloud -->
-     <div class="mt-20 max-w-6xl mx-auto">
-      <p class="text-center text-sm text-gray-500 mb-8">受到各行业领先企业的信任</p>
-      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70">
-       <div class="text-gray-400 text-2xl font-bold">阿里巴巴</div>
-       <div class="text-gray-400 text-2xl font-bold">腾讯</div>
-       <div class="text-gray-400 text-2xl font-bold">百度</div>
-       <div class="text-gray-400 text-2xl font-bold">字节跳动</div>
-       <div class="text-gray-400 text-2xl font-bold">小米</div>
-      </div>
-     </div>
+
     </div>
    </section>
    <!-- [/MODULE] h6i_用户评价 -- 展示不同行业用户对AIVideo平台的评价和使用体验 -->
@@ -631,8 +511,8 @@
       </div>
       <div class="text-center mt-12">
        <p class="text-gray-600 mb-4">还有其他问题？</p>
-       <a class="inline-flex items-center px-6 py-3 text-lg font-medium text-primary bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-all" href="javascript:void(0);">
-        联系客服
+       <a class="inline-flex items-center px-6 py-3 text-lg font-medium text-primary bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-all" href="/help">
+        帮助中心
         <i class="fas fa-arrow-right ml-2"></i>
        </a>
       </div>
@@ -644,20 +524,23 @@
    <section class="py-20 bg-gradient-to-r from-primary to-accent text-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
      <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold mb-6">开始您的AI视频创作之旅</h2>
-     <p class="text-xl text-white/90 max-w-2xl mx-auto mb-10">无需信用卡，立即注册并获得3个免费视频生成额度，体验AI带来的创作革命</p>
+     <p class="text-xl text-white/90 max-w-2xl mx-auto mb-10">一款开源免费的AI视频生成平台，多种创意模板、不限视频时长、一键快捷生成，体验AI带来的创作革命</p>
      <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <a class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-primary bg-white rounded-lg hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5" href="javascript:void(0);">
+      <a class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-primary bg-white rounded-lg hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5" href="/register">
        免费注册
        <i class="fas fa-arrow-right ml-2"></i>
       </a>
-      <a class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all" href="javascript:void(0);">
-       <i class="fas fa-calendar-alt mr-2"></i>预约演示</a>
+      <a class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all" href="/login">
+       <i class="fas fa-calendar-alt mr-2"></i>会员登录</a>
      </div>
     </div>
    </section>
    <!-- [/MODULE] j8k_行动召唤 -- 鼓励用户注册和使用AIVideo平台，包含免费注册和预约演示按钮 -->
+
   </main>
   <!-- [/MODULE] c3d_主内容区域 -- 包含英雄区域、视频生成器、功能特点、使用案例、价格方案、用户评价、常见问题和行动召唤区域 -->
 {% endblock %}
 
-<script src="{{ url_for('static', filename='js/v2/index.js') }}"></script>
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/v2/index.js') }}"></script>
+{% endblock %}

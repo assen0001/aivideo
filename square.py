@@ -86,7 +86,7 @@ def get_videos():
         
         # 构建SQL查询
         base_sql = """
-        SELECT a.id, a.videomerge_url, a.videocover_url, a.create_time, a.user_id,
+        SELECT a.id, a.videomerge_url, a.videocover_url, a.create_time, a.user_id, a.play_time,
                a.views, b.nickname, b.avatar, c.book_name, c.video_type, c.video_aspect
         FROM ai_videomerge a 
         LEFT JOIN ai_user b ON a.user_id = b.id 
@@ -148,6 +148,7 @@ def get_videos():
                 'id': video['id'],
                 'videomerge_url': video['videomerge_url'],
                 'videocover_url': cover_url,
+                'play_time': format_play_time(video['play_time'] or 0),
                 'time_display': format_time_diff(video['create_time']),
                 'views': format_views(video['views']),
                 'nickname': video['nickname'] or '未知用户',
@@ -181,3 +182,9 @@ def get_videos():
             'code': 500,
             'message': f'查询失败: {str(e)}'
         })
+
+def format_play_time(seconds):
+    """将秒转换为分秒格式"""
+    minutes = seconds // 60
+    remaining_seconds = seconds % 60
+    return f'{minutes:02d}:{remaining_seconds:02d}'
