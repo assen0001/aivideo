@@ -14,5 +14,6 @@ build/
 .venv/
 .env
 static/uploads/
+static/video/
 requirements.md
 uv.lock
