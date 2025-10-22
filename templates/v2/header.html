@@ -21,7 +21,7 @@
         <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/help" onclick="setActiveNav(this)">帮助中心</a>
       </nav>
       <!-- CTA Buttons 判断会员登录状态 -->
-      {% if request.cookies.get('user_account') %}
+      {% if session.get('user_account') %}
       <!-- CTA Buttons 已登录状态 -->      
       <div class="flex items-center">
         <button class="p-1 rounded-full text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2" >
@@ -30,7 +30,7 @@
         <div class="ml-3 relative">
           <div>
             <a href="/user/dashboard" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" id="user-menu-button">
-              <img alt="用户头像" class="h-8 w-8 rounded-full object-cover" src="/static/images/avatar.png" />
+            <img alt="用户头像" class="h-8 w-8 rounded-full object-cover" src="{{ session.get('avatar', '/static/images/avatar.png') }}" />
             </a>
           </div>
         </div>
@@ -55,7 +55,8 @@
           <a class='block px-3 py-2 rounded-md text-base font-medium text-primary bg-gray-50' href='/'>首页</a>
           <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/createvideo'>创作视频</a>
           <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/videolist'>视频广场</a>
-          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/vip'>VIP会员</a>
+          <!-- <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/vip'>VIP会员</a> -->
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/download'>源码下载</a>
           <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/help'>帮助中心</a>
           <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/login'>登录</a>
         </div>

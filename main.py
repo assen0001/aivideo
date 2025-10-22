@@ -12,6 +12,8 @@ from register import register_bp
 from login import login_bp
 from square import square_bp
 from videoview import videoview_bp
+from user_changepwd import user_changepwd_bp
+from user_profile import user_profile_bp
 import secrets
 
 app = Flask(__name__)
@@ -95,6 +97,8 @@ app.register_blueprint(register_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(square_bp)
 app.register_blueprint(videoview_bp)
+app.register_blueprint(user_changepwd_bp)
+app.register_blueprint(user_profile_bp)
 
 @app.route('/')
 def index():

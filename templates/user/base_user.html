@@ -44,9 +44,14 @@
             </a>
             
             <!-- VIP会员菜单 -->
-            <a href="/vip" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+            <!-- <a href="/vip" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
               <i class="fas fa-crown text-yellow-500"></i>
               <span class="text-gray-700 font-medium">VIP会员</span>
+            </a> -->
+            <!-- 源码下载菜单 -->
+            <a href="/download" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <i class="fas fa-download text-purple-500"></i>
+              <span class="text-gray-700 font-medium">源码下载</span>
             </a>
             
             <!-- 帮助中心菜单 -->
@@ -74,7 +79,7 @@
             <!-- 用户头像和用户名 -->
             <div class="flex items-center space-x-2">
               <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                <i class="fas fa-user text-white text-sm"></i>
+                <img alt="用户头像" class="h-8 w-8 rounded-full object-cover" src="/{{ session['avatar'] }}" />
               </div>
               <span class="text-gray-700 font-medium">{{ session['nickname'] if session.get('nickname') else 'null' }}</span>
             </div>
