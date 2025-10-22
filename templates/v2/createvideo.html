@@ -334,15 +334,20 @@
      <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-500 mx-auto">
      </div>
      <h3 class="mt-4 text-lg font-medium text-gray-900">视频生成中...</h3>
-     <p class="mt-2 text-gray-600">AI正在为您创作精彩视频，请稍候！（普通会员只能生成15秒内视频）</p>
+     <p class="mt-2 text-gray-600">AI正在为您创作精彩视频，请稍候！</p>
      <div class="mt-6 w-full bg-gray-200 rounded-full h-2">
       <div class="bg-indigo-600 h-2 rounded-full" id="progress-bar" style="width: 0%"></div>
      </div>
      <p class="mt-2 text-sm text-gray-500" id="progress-text">0% 完成</p>
-     <button class="mt-6 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out" id="cancel-generation">
+     <button class="mt-6 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out" id="cancel-generation" disabled>
       <i class="fas fa-times mr-2"></i>
       取消生成
      </button>
+     <p>
+        <span id="job-demo" class="text-sm text-red-500">本演示平台算力有限，正在排队执行任务。</span>
+        <br>
+        <span id="job-time" class="text-sm text-red-500">普通会员只能生成15秒内视频。</span>
+     </p>     
     </div>
     <!-- [/MODULE] 9p2_创作视频页面:生成状态 -- 包含加载动画、进度条和取消按钮，用于显示视频生成进度 -->
     <!-- [MODULE] 0q3_创作视频页面:生成结果 -->

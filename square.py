@@ -151,7 +151,7 @@ def get_videos():
                 'play_time': format_play_time(video['play_time'] or 0),
                 'time_display': format_time_diff(video['create_time']),
                 'views': format_views(video['views']),
-                'nickname': video['nickname'] or '未知用户',
+                'nickname': video['nickname'] or '未注册用户',
                 'avatar': video['avatar'] or 'static/images/avatar.png',
                 'book_name': video['book_name'] or '未命名视频',
                 'video_type': video['video_type'] or '',

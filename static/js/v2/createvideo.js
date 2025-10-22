@@ -295,6 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.status === 'success' && data.data.length > 0) {
                     const jobs = data.data;   
                     console.log("jobs:", jobs);
+                    id = jobs[0].id;
                     book_id = jobs[0].book_id;   
                     cover_url = jobs[0].videocover_url;   // 封面URL 
                     merge_url = jobs[0].videomerge_url;   // 合并视频URL 
@@ -302,7 +303,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     // 显示生成状态
                     formContent.classList.add('hidden');
                     generationStatus.classList.remove('hidden');
-                                    
+
+                    // 更新进度条，判断 jobs数组末尾项目job_type的值：
+                    if (jobs[jobs.length - 1].job_type === 1) {
+                      progressBar.style.width = "10%";
+                      progressText.textContent = "10% 完成";
+                    } else if (jobs[jobs.length - 1].job_type === 2) {
+                        progressBar.style.width = "20%";
+                        progressText.textContent = "20% 完成";
+                    } else if (jobs[jobs.length - 1].job_type === 3) {
+                        progressBar.style.width = "30%";
+                        progressText.textContent = "30% 完成";
+                    } else if (jobs[jobs.length - 1].job_type === 4) {
+                        progressBar.style.width = "50%";
+                        progressText.textContent = "50% 完成";
+                    } else if (jobs[jobs.length - 1].job_type === 5) {
+                        progressBar.style.width = "80%";
+                        progressText.textContent = "80% 完成";
+                    } else if (jobs[jobs.length - 1].job_type === 6) {
+                        progressBar.style.width = "90%";
+                        progressText.textContent = "90% 完成";
+                    }
+
                     // 判断首条任务状态：2-成功，4-失败
                     if (jobs[0].job_status === 2) {
                         // 视频创建成功
@@ -359,11 +381,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             tempImg.src = cover_url;
                         }
                         
-                        // 为播放按钮添加点击事件，播放合并视频
+                        // 为播放按钮添加点击事件，跳转到视频查看页面
                         var playButton = document.querySelector('#generation-result > div.mt-6 > div > button');
-                        if (playButton && merge_url) {
+                        if (playButton && jobs[0].id) {
                             playButton.onclick = function() {
-                                window.open(merge_url, '_blank');
+                                window.location.href = '/videoview?id=' + jobs[0].id;
                             };
                         }
                         
@@ -431,33 +453,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             showNotification('错误', '视频生成失败，已达到最大重试次数', 'error');
                             generationStatus.classList.add('hidden');
                             formContent.classList.remove('hidden');
-                            // 重置计数器
-                            checkVideoStatus.errorRetryCount = 0;
                         }
-
                         return; // 终止轮询
                     } 
-
-                    // 这里增加判断 jobs数组末尾项目job_type的值：
-                    if (jobs[jobs.length - 1].job_type === 1) {
-                      progressBar.style.width = "10%";
-                      progressText.textContent = "10% 完成";
-                    } else if (jobs[jobs.length - 1].job_type === 2) {
-                        progressBar.style.width = "20%";
-                        progressText.textContent = "20% 完成";
-                    } else if (jobs[jobs.length - 1].job_type === 3) {
-                        progressBar.style.width = "30%";
-                        progressText.textContent = "30% 完成";
-                    } else if (jobs[jobs.length - 1].job_type === 4) {
-                        progressBar.style.width = "50%";
-                        progressText.textContent = "50% 完成";
-                    } else if (jobs[jobs.length - 1].job_type === 5) {
-                        progressBar.style.width = "70%";
-                        progressText.textContent = "70% 完成";
-                    } else if (jobs[jobs.length - 1].job_type === 6) {
-                        progressBar.style.width = "90%";
-                        progressText.textContent = "90% 完成";
-                    }
 
                 }
             });            
