@@ -60,7 +60,7 @@ pip install -r requirements.txt
 5. 配置环境
   - 把.env.example文件复制一份，改名为：.env
   - 配置AIVIDEO_URL为本项目访问链接（必填，需要映射到公网访问，建议用https）
-  - 本地部署ComfyUI + z-Inages + Wan2.2，并在.env中配置COMFYUI_URL(源码部署要自己安装，镜像部署容器中已安装好)
+  - 本地部署ComfyUI + z-Images + Wan2.2，并在.env中配置COMFYUI_URL(源码部署要自己安装，镜像部署容器中已安装好)
   - 本地部署Index-TTS(2.0)语音合成模型，并在.env中配置INDEXTTS_URL(源码部署要自己安装，镜像部署容器中已安装好)
   - 用aivideo_db.sql文件创建数据库，修改.env中数据库配置信息(源码部署要自己安装，镜像部署容器中已安装好)
   - 企业版部署N8N智能体调度平台。(个人版省略本步骤，企业版须独立部署N8N工作流平台)
