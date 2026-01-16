@@ -1,0 +1,187 @@
+{% extends "user/base_user.html" %}
+
+{% block content %}
+<div class="p-6">
+    <!-- 查询表单 0-待生成文案，1-已生成文案，2-已生成字幕，3-已生成语音，4-已生成图片，5-已图生视频 ，6-已完成-->
+    <div class="mb-6">
+        <form id="searchForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" id="bookName" placeholder="关键字">
+            </div>
+            <!-- <div>
+                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" id="bookAuthor" placeholder="作者">
+            </div> -->
+            <div>
+                <select class="w-[200px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" id="bookStatus">
+                    <option value="">全部状态</option>
+                    <option value="0">待生成文案</option>
+                    <option value="1">已生成文案</option>
+                    <option value="2">已生成字幕</option>
+                    <option value="3">已生成语音</option>
+                    <option value="4">已生成图片</option>
+                    <option value="5">已图生视频</option>
+                    <option value="6">已完成</option>
+                </select>
+            </div>
+            <div class="flex space-x-2">
+                <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition-colors duration-200">查询</button>
+                <button type="button" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md transition-colors duration-200" id="btnAdd">新增</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 书单表格 -->
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full divide-y divide-gray-200" id="booklistTable">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs uppercase tracking-wider">ID</th>
+                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 15%;">书名</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">作者</th> -->
+                    <th class="px-6 py-3 text-left text-xs uppercase tracking-wider" style="width: 30%;">主题文本</th>
+                    <th class="px-6 py-3 text-left text-xs uppercase tracking-wider" style="width: 40%;">文案内容</th>
+                    <th class="px-6 py-3 text-left text-xs uppercase tracking-wider">状态</th>
+                    <th class="px-6 py-3 text-left text-xs uppercase tracking-wider">操作</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <!-- 书单数据将通过JavaScript动态加载 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 分页控件 -->
+    <div class="mt-6 flex justify-center">
+        <ul class="inline-flex items-center -space-x-px" id="pagination">
+            <!-- 分页将通过JavaScript动态加载 -->
+        </ul>
+    </div>
+</div>
+
+<!-- 新增/修改模态框 -->
+<div id="bookModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+            <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="flex items-center justify-between w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900" id="modalTitle">新增项目</h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="bookModal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <form id="bookForm" class="space-y-4">
+                        <input type="hidden" id="bookId">
+                        <div>
+                            <label for="modalBookType" class="block text-sm font-medium text-gray-700">视频模板<span class="text-red-500">（必填）</span></label>
+                            <select class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookType">
+                                <option value="">请选择</option>
+                                <option value="theme-creative" selected>主题创意</option>
+                                <option value="subtitle-video">字幕配音</option>
+                                <option value="ai-reading">AI读书</option>
+                                <option value="poetry-analysis">古诗词解析</option>
+                                <option value="children-book">儿童绘本</option>
+                            </select>
+                        </div>
+                        <!-- <div>
+                            <label for="modalBookName" class="block text-sm font-medium text-gray-700">书名</label>
+                            <input type="text" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookName" required>
+                        </div>
+                        <div>
+                            <label for="modalBookAuthor" class="block text-sm font-medium text-gray-700">作者</label>
+                            <input type="text" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookAuthor" required>
+                        </div> -->
+                        <div>
+                            <label for="modalBookNote" class="block text-sm font-medium text-gray-700">主题文本<span class="text-red-500">（必填）</span></label>
+                            <textarea class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookNote" rows="3"></textarea>
+                        </div>
+                        <div>
+                            <label for="modalBookContent" class="block text-sm font-medium text-gray-700">文案内容</label>
+                            <textarea class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookContent" rows="3"></textarea>
+                        </div>
+                        <!-- <div>
+                            <label for="modalBookPrompt" class="block text-sm font-medium text-gray-700">补充性提示词</label>
+                            <input type="text" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookPrompt">
+                        </div> --> 
+                        <div>
+                            <label for="modalBookRatio" class="block text-sm font-medium text-gray-700">视频比例<span class="text-red-500">（必填）</span></label>
+                            <select class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookRatio">
+                                <option value="">请选择比例</option>
+                                <option value="4:3" selected>横向（4:3）</option>
+                                <option value="3:4">竖向（3:4）</option>
+                                <option value="16:9">横向（16:9）</option>
+                                <option value="9:16">竖向（9:16）</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modalBookStyler" class="block text-sm font-medium text-gray-700">风格样式<span class="text-red-500">（必填）</span></label>
+                            <select class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookStyler">
+                                <option value="">请选择样式</option>
+                                <option value="sai-动漫风格" selected>卡通风格</option>
+                                <option value="sai-胶片摄影">写实风格</option>
+                                <option value="misc-极简主义">极简风格</option>
+                                <option value="artstyle-迷幻艺术">奇幻风格</option>
+                                <option value="sai-电影感">电影风格</option>
+                                <option value="futuristic-科幻">科幻风格</option>
+                                <option value="artstyle-水彩画">水彩风格</option>
+                                <option value="sai-3D模型">3D风格</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modalBookVoice" class="block text-sm font-medium text-gray-700">字幕配音</label>
+                            <select class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookVoice">
+                                <option selected value="none">无配音</option>
+                                <option value="afei.mp3">阿飞（男声）</option>
+                                <option value="awei.mp3">阿伟（男声）</option>
+                                <option value="aze.mp3">阿哲（男声）</option>
+                                <option value="nana.mp3">娜娜（女声）</option>
+                                <option value="lili.mp3">莉莉（女声）</option>
+                                <option value="wenjun.mp3">文君（女声）</option>
+                                <option value="xiaohua.mp3">小花（童声）</option>
+                                <option value="JackMa_mayun.mp3">JackMa</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modalBookMusic" class="block text-sm font-medium text-gray-700">背景音乐</label>
+                            <select class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookMusic">
+                                <option selected value="none">无背景音乐</option>
+                                <option value="1-relaxing.mp3">轻松愉悦</option>
+                                <option value="2-inspiring.mp3">励志激昂</option>
+                                <option value="3-emotional.mp3">情感深沉</option>
+                                <option value="4-upbeat.mp3">欢快活泼</option>
+                                <option value="5-cinematic.mp3">电影感</option>
+                                <option value="6-electronic.mp3">电子音乐</option>
+                            </select>
+                        </div>         
+                        <div>
+                            <label for="modalBookStatus" class="block text-sm font-medium text-gray-700">状态</label>
+                            <select class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="modalBookStatus" required>
+                                <option value="0">待生成文案</option>
+                                <option value="1">已生成文案</option>
+                                <option value="2">已生成字幕</option>
+                                <option value="3">已生成语音</option>
+                                <option value="4">已生成图片</option>
+                                <option value="5">已图生视频</option>
+                                <option value="6">已完成</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm" id="btnSave">保存</button>
+                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" data-modal-toggle="bookModal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/booklist.js') }}"></script>
+{% endblock %}

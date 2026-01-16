@@ -1,0 +1,131 @@
+{% extends "user/base_user.html" %}
+
+{% block title %}个人信息 - 用户中心{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <!-- 加载遮罩层 -->
+  <div class="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">加载中...</span>
+      </div>
+      <p class="mt-2 text-gray-600">正在加载个人信息...</p>
+    </div>
+  </div>
+  
+  <!-- 页面标题 -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">个人信息</h1>
+    <p class="text-gray-600">管理您的个人资料和账户设置</p>
+  </div>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 content-area">
+    <!-- 个人信息表单 -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-lg font-semibold">基本信息</h2>
+        </div>
+        
+        <div class="p-6">
+          <form id="profile-form" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">帐号/邮箱</label>
+                <input type="email" id="account" name="account" class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100" readonly>
+                <p class="text-xs text-gray-500 mt-1">帐号不可修改</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">呢称</label>
+                <input type="text" id="nickname" name="nickname" class="w-full border rounded-lg px-3 py-2" placeholder="请输入昵称">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">真实姓名</label>
+                <input type="text" id="realname" name="realname" class="w-full border rounded-lg px-3 py-2" placeholder="请输入真实姓名">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">手机号码</label>
+                <input type="tel" id="phone" name="phone" class="w-full border rounded-lg px-3 py-2" placeholder="请输入手机号码">
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">个人简介</label>
+              <textarea id="note" name="note" class="w-full border rounded-lg px-3 py-2 h-24" placeholder="介绍一下自己..."></textarea>
+            </div>
+            
+            <div class="flex justify-end">
+              <button type="submit" class="save-btn bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">保存修改</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 头像和账户信息 -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-lg shadow p-6">
+        <!-- 头像上传 -->
+        <div class="text-center mb-6">
+          <div class="relative inline-block">
+            <img id="avatar-img" src="{{ url_for('static', filename='images/avatar.png') }}" alt="头像" class="w-24 h-24 rounded-full mx-auto">
+            <input type="file" id="avatar-file" accept="image/*" style="display: none;">
+            <button id="avatar-upload-btn" class="absolute bottom-0 right-0 bg-blue-600 text-white p-1 rounded-full">
+              <i class="fas fa-camera text-xs"></i>
+            </button>
+          </div>
+          <h3 class="font-semibold mt-3 user-name">加载中...</h3>
+          <p class="text-gray-500 text-sm vip-level">普通用户</p>
+        </div>
+        
+        <!-- 账户信息 -->
+        <div class="space-y-4">
+          <div class="border-t pt-4">
+            <h4 class="font-medium mb-2">账户信息</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-600">注册时间：</span>
+                <span id="createtime">加载中...</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">最后登录：</span>
+                <span id="lastertime">加载中...</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">账户状态：</span>
+                <span id="status" class="text-green-600">正常</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 会员信息 -->
+          <div class="border-t pt-4">
+            <h4 class="font-medium mb-2">会员信息</h4>
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+              <div class="flex items-center">
+                <i class="fas fa-crown text-yellow-500 mr-2"></i>
+                <span class="font-medium vip-level">普通会员</span>
+              </div>
+              <p class="text-base text-yellow-600 mt-1 vip-expiry" style="display: none;">到期时间：2024-12-31</p>
+              <button class="upgrade-vip-btn w-full bg-yellow-500 text-white py-1 rounded text-sm mt-2 hover:bg-yellow-600">
+                升级VIP
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/user/profile.js') }}"></script>
+{% endblock %}

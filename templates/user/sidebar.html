@@ -1,0 +1,132 @@
+<!-- 用户后台侧边栏导航 -->
+<div class="h-full flex flex-col">
+  <!-- Logo区域 -->
+  <div class="p-4 border-b" style="height: 73px;">
+    <a href="/" class="text-xl font-bold text-blue-600 hover:text-blue-700">AIVideo用户中心</a>
+    <p class="text-sm text-gray-500">欢迎回来，{{ session['user_account'][:15] if session.get('user_account') else 'null' }}</p>
+  </div>
+  
+  <!-- 导航菜单 -->
+  <nav class="flex-1 p-4">
+    <ul class="space-y-2">
+      <li>
+        <a href="/user/dashboard" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'user_dashboard.user_dashboard' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-tachometer-alt w-6"></i>
+          <span>总览</span>
+        </a>
+      </li>
+      <li>
+        <a href="/user/my-videos" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'user_myvideo.user_my_videos' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-video w-6"></i>
+          <span>我的视频</span>
+        </a>
+      </li>
+      <li>
+        <a href="/user/profile" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'user_profile.profile' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-user w-6"></i>
+          <span>个人信息</span>
+        </a>
+      </li>
+      <li>
+        <a href="/user/change-password" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'user_changepwd.user_change_password' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-lock w-6"></i>
+          <span>修改密码</span>
+        </a>
+      </li>
+      <li>
+        <a href="/user/customer-service" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'user_service.user_customer_service' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-headset w-6"></i>
+          <span>联系客服</span>
+        </a>
+      </li>
+      <!-- 这里添加一个分隔线 -->
+      <li class="border-t border-gray-200 my-4"></li>
+      <li class="flex items-center justify-center gap-2 bg-gray-200 py-2">
+        <i class="fas fa-caret-down"></i>
+        <span class="text-black-500">视频剪辑管理</span>
+        <i class="fas fa-caret-down"></i>
+      </li>
+      <li>
+        <a href="/booklist" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'booklist.booklist_page' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-file-alt w-6"></i>
+          <span>1. 文案管理</span>
+        </a>
+      </li>
+      <li>
+        <a href="/txt2voice" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'txt2voice.txt2voice' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-closed-captioning w-6"></i>
+          <span>2. 字幕配音管理</span>
+        </a>
+      </li>
+      <li>
+        <a href="/imageslist" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'imageslist.images_page' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-image w-6"></i>
+          <span>3. 分镜图片管理</span>
+        </a>
+      </li>
+      <li>
+        <a href="/videolist" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'videolist.videolist_page' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-film w-6"></i>
+          <span>4. 分镜视频管理</span>
+        </a>
+      </li>
+      <li>
+        <a href="/videomerge" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'videomerge.videomerge' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-video w-6"></i>
+          <span>5. 视频合成管理</span>
+        </a>
+      </li>
+      {% if session.get('vip') == 9 %}
+      <!-- 这里添加一个分隔线 -->
+      <li class="border-t border-gray-200 my-4"></li>
+      <li>
+        <a href="{{ url_for('user_article.user_articles') }}" class="flex items-center p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 {% if request.endpoint == 'user_article.user_articles' %}bg-blue-50 text-blue-600{% endif %}">
+          <i class="fas fa-newspaper w-6"></i>
+          <span>文章管理</span>
+        </a>
+      </li>            
+      {% endif %}
+
+    </ul>
+  </nav>
+  
+  <!-- 底部操作 -->
+  <div class="p-4 border-t">
+    <a href="/" class="flex items-center p-3 rounded-lg hover:bg-red-50 text-red-600" onclick="deleteUserCookie(event)">
+      <i class="fas fa-sign-out-alt w-6"></i>
+      <span>退出登录</span>
+    </a>
+    <script>
+      // 删除用户cookie函数
+      async function deleteUserCookie(event) {
+        // 阻止默认跳转行为
+        event.preventDefault();
+        
+        // 先清除前端cookie
+        document.cookie = "user_account=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        
+        try {
+          // 异步请求后台清除session（不等待结果）
+          fetch('/logout', {
+            method: 'GET',
+            credentials: 'same-origin'
+          }).then(response => {
+            if (response.ok) {
+              console.log('后台session已清除');
+              window.location.href = "/";
+            } else {
+              console.error('后台session清除失败:', response.statusText);
+              window.location.href = "/";
+            }
+          }).catch(error => {
+            console.error('后台session清除失败:', error);
+            window.location.href = "/";
+          });
+        } catch (error) {
+          console.error('退出登录异常:', error);          
+        }
+        
+      }
+    </script>
+  </div>
+</div>

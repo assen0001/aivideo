@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}用户中心 - AIVideo{% endblock %}</title>  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user/user_base.css') }}">
+</head>
+<body class="bg-gray-100">
+  <!-- 用户后台专用布局 -->
+  <div class="flex h-screen">
+    <!-- 侧边栏导航 -->
+    <nav class="w-64 bg-white shadow-lg">
+      {% include 'user/sidebar.html' %}
+    </nav>
+    
+    <!-- 主要内容区域 -->
+    <div class="flex-1 flex flex-col">
+      <!-- 顶部导航栏 -->
+      <header class="bg-white shadow-sm border-b">
+        <div class="flex items-center justify-between px-6 py-4">
+          <!-- 菜单导航 -->
+          <div class="flex items-center space-x-6">
+            <!-- 网站首页菜单 -->
+            <a href="/" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <i class="fas fa-home text-red-500"></i>
+              <span class="text-gray-700 font-medium">网站首页</span>
+            </a>
+            
+            <!-- 创作视频菜单 -->
+            <a href="/createvideo" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <i class="fas fa-video text-blue-500"></i>
+              <span class="text-gray-700 font-medium">创作视频</span>
+            </a>
+            
+            <!-- 视频广场菜单 -->
+            <a href="/square" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <i class="fas fa-photo-video text-green-500"></i>
+              <span class="text-gray-700 font-medium">视频广场</span>
+            </a>            
+            <!-- VIP会员菜单 -->
+            <!-- <a href="/vip" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <i class="fas fa-crown text-yellow-500"></i>
+              <span class="text-gray-700 font-medium">VIP会员</span>
+            </a> -->
+            <!-- 源码下载菜单 -->
+            <a href="/download" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <i class="fas fa-download text-purple-500"></i>
+              <span class="text-gray-700 font-medium">源码下载</span>
+            </a>
+            <!-- 帮助中心菜单 -->
+            <a href="/help" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <i class="fas fa-question-circle text-purple-500"></i>
+              <span class="text-gray-700 font-medium">帮助中心</span>
+            </a>
+          </div>
+          
+          <!-- 用户信息区域 -->
+          <div class="flex items-center space-x-4">
+            <!-- 会员类型 -->
+            {% if session.get('vip') == 1 %}
+            <div class="flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              <i class="fas fa-crown mr-1"></i>
+              <span>VIP会员</span>
+            </div>
+            {% else %}
+            <div class="flex items-center bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              <i class="fas fa-user mr-1"></i>
+              <span>普通会员</span>
+            </div>
+            {% endif %}
+            
+            <!-- 用户头像和用户名 -->
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 flex items-center justify-center">
+                <img alt="用户头像" class="h-8 w-8 rounded-full object-cover" src="/{{ session['avatar'] }}" />
+              </div>
+              <span class="text-gray-700 font-medium">{{ session['nickname'] if session.get('nickname') else 'null' }}</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <!-- 主要内容 -->
+      <main class="flex-1 overflow-auto">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

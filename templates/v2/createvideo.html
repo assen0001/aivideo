@@ -1,0 +1,408 @@
+{% extends "v2/base.html" %}
+
+{% block title %}AIVideo - 一站式全流程AI视频创作平台 - 创作视频{% endblock %}
+
+{% block content %}
+  <!-- [MODULE] 2b9_主内容区域 -->
+  <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+   <!-- [MODULE] 5c7_创作视频页面 -->
+   <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <!-- [MODULE] 8d1_创作视频页面:页面标题 -->
+    <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
+     <h1 class="text-2xl font-bold text-gray-900">创作视频</h1>
+     <p class="text-gray-600 mt-1">填写以下信息，AI将为您生成精彩视频。使用前请先注册成为会员。</p>
+    </div>
+    <!-- [/MODULE] 8d1_创作视频页面:页面标题 -- 包含页面标题和简短说明文字 -->
+    <!-- [MODULE] 3e2_创作视频页面:表单内容 -->
+    <form class="p-6 space-y-6" id="video-creation-form">
+     <!-- [MODULE] a1b_创作视频页面:视频类型选择 -->
+     <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-3">视频模板</label>
+      <div class="flex flex-wrap gap-4">
+       <div class="video-type-item text-center cursor-pointer" data-type="theme-creative">
+        <div class="w-12 h-12 mx-auto bg-indigo-100 border-2 border-indigo-500 rounded-full flex items-center justify-center mb-2">
+         <i class="fas fa-lightbulb text-indigo-600 text-xl"></i>
+        </div>
+        <span class="text-xs block">主题创意</span>
+       </div>
+       <div class="video-type-item text-center cursor-pointer" data-type="subtitle-video">
+        <div class="w-12 h-12 mx-auto bg-gray-100 border border-gray-300 rounded-full flex items-center justify-center mb-2">
+         <i class="fas fa-comment-dots text-gray-600 text-xl"></i>
+        </div>
+        <span class="text-xs block">字幕配音</span>
+       </div>
+       <div class="video-type-item text-center cursor-pointer" data-type="ai-reading">
+        <div class="w-12 h-12 mx-auto bg-gray-100 border border-gray-300 rounded-full flex items-center justify-center mb-2">
+         <i class="fas fa-book text-gray-600 text-xl"></i>
+        </div>
+        <span class="text-xs block">AI读书</span>
+       </div>
+       <div class="video-type-item text-center cursor-pointer" data-type="poetry-analysis">
+        <div class="w-12 h-12 mx-auto bg-gray-100 border border-gray-300 rounded-full flex items-center justify-center mb-2">
+         <i class="fas fa-pen-fancy text-gray-600 text-xl"></i>
+        </div>
+        <span class="text-xs block">古诗词解析</span>
+       </div>
+       <div class="video-type-item text-center cursor-pointer" data-type="children-book">
+        <div class="w-12 h-12 mx-auto bg-gray-100 border border-gray-300 rounded-full flex items-center justify-center mb-2">
+         <i class="fas fa-child text-gray-600 text-xl"></i>
+        </div>
+        <span class="text-xs block">儿童绘本</span>
+       </div>
+      </div>
+     </div>
+     <!-- [/MODULE] a1b_创作视频页面:视频类型选择 -- 包含视频类型选择项，使用小图标横向排列，默认选中主题创意视频 -->
+     <!-- [MODULE] 7f4_创作视频页面:文本内容输入 -->
+     <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2" for="video-text">
+       <i class="fas fa-align-left text-indigo-500 mr-2"></i>
+       文本内容
+      </label>
+      <textarea class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" id="video-text" name="video-text" placeholder="请输入您想要生成视频的文本内容，AI将根据文本内容生成对应的视频画面..." required="" rows="4"></textarea>
+      <p class="mt-2 text-xs text-gray-500">提示：详细的描述将帮助AI生成更符合您期望的视频内容。</p>
+     </div>
+     <!-- [/MODULE] 7f4_创作视频页面:文本内容输入 -- 包含文本输入框和提示文字，用于输入视频内容描述 -->
+     <!-- [MODULE] a2b_创作视频页面:高级配置切换 -->
+     <!-- <div class="mb-4">
+      <button class="text-indigo-600 hover:text-indigo-500 text-sm font-medium flex items-center" id="toggle-advanced-settings" type="button">
+       <span>高级配置</span>
+       <i class="fas fa-chevron-down ml-1 transition-transform duration-200" id="advanced-settings-icon"></i>
+      </button>
+     </div> -->
+     <!-- [/MODULE] a2b_创作视频页面:高级配置切换 -- 包含高级配置切换按钮，点击可展开或收起高级设置选项 -->
+     <!-- [MODULE] 9g5_创作视频页面:图片上传 -->
+     <!-- <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+       <i class="fas fa-upload text-indigo-500 mr-2"></i>
+       图片上传（可选）
+      </label>
+      <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+       <div class="space-y-1 text-center">
+        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400"></i>
+        <div class="flex text-sm text-gray-600">
+         <label class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" for="file-upload">
+          <span>上传图片</span>
+          <input accept="image/*" class="sr-only" id="file-upload" name="file-upload" type="file"/>
+         </label>
+         <p class="pl-1">或拖放文件         </p>
+        </div>
+        <p class="text-xs text-gray-500">支持 JPG, PNG, GIF (最大 10MB)</p>
+       </div>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-4 hidden" id="uploaded-images">
+       <!-- 上传图片预览将在这里动态显示 -->
+      <!-- </div>
+     </div> --> 
+     <!-- [/MODULE] 9g5_创作视频页面:图片上传 -- 包含图片上传区域和预览区域，支持拖放上传，可上传JPG、PNG、GIF格式图片 -->
+     <!-- [MODULE] 2h6_创作视频页面:视频规格选择 -->
+     <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+       <i class="fas fa-crop text-indigo-500 mr-2"></i>
+       视频比例
+      </label>
+      <div class="grid grid-cols-4 gap-4">
+        <!-- 横向16:9选项 -->
+       <div class="relative">
+        <input checked="" class="sr-only" id="aspect-16-9" name="video-aspect" type="radio" value="16:9"/>
+        <label class="flex flex-col items-center p-4 border-2 border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent relative h-full" for="aspect-16-9">
+         <div class="w-20 h-10 flex items-center justify-center mb-2">
+          <div class="w-16 h-4 bg-gray-100 rounded flex items-center justify-center">
+           <i class="fas fa-desktop text-gray-500 text-lg"></i>
+          </div>
+         </div>
+         <div class="text-center">
+          <span class="block text-sm font-medium text-gray-900">横向（16:9）</span>
+         </div>
+         <div class="absolute top-3 right-3 h-5 w-5 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center opacity-0">
+          <div class="h-3 w-3 rounded-full bg-indigo-600"></div>
+         </div>
+        </label>
+       </div>
+       <!-- 竖向9:16选项 -->
+       <div class="relative">
+        <input class="sr-only" id="aspect-9-16" name="video-aspect" type="radio" value="9:16"/>
+        <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-md cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent relative h-full" for="aspect-9-16">
+         <div class="w-20 h-10 flex items-center justify-center mb-2">
+          <div class="w-9 h-8 bg-gray-100 rounded flex items-center justify-center">
+           <i class="fas fa-mobile-alt text-gray-500 text-lg"></i>
+          </div>
+         </div>
+         <div class="text-center">
+          <span class="block text-sm font-medium text-gray-900">竖向（9:16）</span>
+         </div>
+         <div class="absolute top-3 right-3 h-5 w-5 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center opacity-0">
+          <div class="h-3 w-3 rounded-full bg-indigo-600"></div>
+         </div>
+        </label>
+       </div>
+       <!-- 横向4:3选项 -->
+       <div class="relative">
+        <input class="sr-only" id="aspect-4-3" name="video-aspect" type="radio" value="4:3"/>
+        <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-md cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent relative h-full" for="aspect-4-3">
+         <div class="w-20 h-10 flex items-center justify-center mb-2">
+          <div class="w-16 h-6 bg-gray-100 rounded flex items-center justify-center">
+           <i class="fas fa-desktop text-gray-500 text-lg"></i>
+          </div>
+         </div>
+         <div class="text-center">
+          <span class="block text-sm font-medium text-gray-900">横向（4:3）</span>
+         </div>
+         <div class="absolute top-3 right-3 h-5 w-5 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center opacity-0">
+          <div class="h-3 w-3 rounded-full bg-indigo-600"></div>
+         </div>
+        </label>
+       </div>
+       <!-- 竖向3:4选项 -->
+       <div class="relative">
+        <input class="sr-only" id="aspect-3-4" name="video-aspect" type="radio" value="3:4"/>
+        <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-md cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent relative h-full" for="aspect-3-4">
+         <div class="w-20 h-10 flex items-center justify-center mb-2">
+          <div class="w-12 h-8 bg-gray-100 rounded flex items-center justify-center">
+           <i class="fas fa-mobile-alt text-gray-500 text-lg"></i>
+          </div>
+         </div>
+         <div class="text-center">
+          <span class="block text-sm font-medium text-gray-900">竖向（3:4）</span>
+         </div>
+         <div class="absolute top-3 right-3 h-5 w-5 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center opacity-0">
+          <div class="h-3 w-3 rounded-full bg-indigo-600"></div>
+         </div>
+        </label>
+       </div>
+      </div>
+     </div>
+     <!-- [/MODULE] 2h6_创作视频页面:视频规格选择 -- 包含横向16:9和竖向9:16两个选项，使用图标和文字展示，支持单选 -->
+     <!-- [MODULE] 4j7_创作视频页面:视频时长设置 -->
+     <!-- <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2" for="video-duration">
+       <i class="fas fa-clock text-indigo-500 mr-2"></i>
+       视频时长 (秒)
+      </label>
+      <div class="flex items-center space-x-4">
+       <input class="w-32 px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" id="video-duration" max="300" min="5" name="video-duration" type="number" value="30"/>
+       <div class="flex-1">
+        <input class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-500" id="duration-slider" max="300" min="5" type="range" value="30"/>
+       </div>
+       <span class="text-sm font-medium text-gray-900 w-12 text-right" id="duration-value">180秒</span>
+      </div>
+      <div class="mt-2 flex items-center">
+       <i class="fas fa-info-circle text-yellow-500 mr-2"></i>
+       <p class="text-xs text-gray-600">
+        <span class="font-medium">免费会员</span>
+        最长支持30秒，
+        <a class="text-indigo-600 hover:text-indigo-500" href="/vip">升级VIP</a>
+        可解锁更长时长
+       </p>
+      </div>
+     </div> -->
+     <!-- [/MODULE] 4j7_创作视频页面:视频时长设置 -- 包含数字输入框和滑块控制器，用于设置视频时长，显示免费会员时长限制和VIP升级提示 -->
+     <!-- [MODULE] 5k8_创作视频页面:视频风格选择 -->
+     <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+       <i class="fas fa-palette text-indigo-500 mr-2"></i>
+       视频风格
+      </label>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+       <div class="relative">
+        <input checked="" class="sr-only" id="style-cartoon" name="video-style" type="radio" value="sai-动漫风格"/>
+        <label class="block p-3 border-2 border-indigo-500 bg-indigo-50 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-cartoon">
+         <i class="fas fa-paint-brush text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">卡通风格</span>
+        </label>
+       </div>
+       <div class="relative">
+        <input class="sr-only" id="style-realistic" name="video-style" type="radio" value="sai-胶片摄影"/>
+        <label class="block p-3 border-2 border-gray-200 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-realistic">
+         <i class="fas fa-camera text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">写实风格</span>
+        </label>
+       </div>
+       <div class="relative">
+        <input class="sr-only" id="style-minimalist" name="video-style" type="radio" value="misc-极简主义"/>
+        <label class="block p-3 border-2 border-gray-200 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-minimalist">
+         <i class="fas fa-square text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">极简风格</span>
+        </label>
+       </div>
+       <div class="relative">
+        <input class="sr-only" id="style-fantasy" name="video-style" type="radio" value="artstyle-迷幻艺术"/>
+        <label class="block p-3 border-2 border-gray-200 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-fantasy">
+         <i class="fas fa-magic text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">奇幻风格</span>
+        </label>
+       </div>
+       <div class="relative">
+        <input class="sr-only" id="style-vintage" name="video-style" type="radio" value="sai-电影感"/>
+        <label class="block p-3 border-2 border-gray-200 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-vintage">
+         <i class="fas fa-film text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">电影风格</span>
+        </label>
+       </div>
+       <div class="relative">
+        <input class="sr-only" id="style-sci-fi" name="video-style" type="radio" value="futuristic-科幻"/>
+        <label class="block p-3 border-2 border-gray-200 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-sci-fi">
+         <i class="fas fa-rocket text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">科幻风格</span>
+        </label>
+       </div>
+       <div class="relative">
+        <input class="sr-only" id="style-watercolor" name="video-style" type="radio" value="artstyle-水彩画"/>
+        <label class="block p-3 border-2 border-gray-200 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-watercolor">
+         <i class="fas fa-tint text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">水彩风格</span>
+        </label>
+       </div>
+       <div class="relative">
+        <input class="sr-only" id="style-3d" name="video-style" type="radio" value="sai-3D模型"/>
+        <label class="block p-3 border-2 border-gray-200 rounded-md text-center cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" for="style-3d">
+         <i class="fas fa-cube text-xl text-gray-500 mb-2"></i>
+         <span class="text-sm font-medium text-gray-900 block">3D风格</span>
+        </label>
+       </div>
+      </div>
+     </div>
+     <!-- [/MODULE] 5k8_创作视频页面:视频风格选择 -- 包含多种视频风格选项，使用图标和文字展示，支持单选 -->
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- [MODULE] 7m0_创作视频页面:旁白配音选择 -->
+      <div>
+       <label class="block text-sm font-medium text-gray-700 mb-2" for="narration-voice" style="top:-3px;position:relative">
+        <i class="fas fa-microphone text-indigo-500 mr-2"></i>
+        字幕配音
+       </label>
+       <div class="flex items-center">
+        <select class="flex-1 px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out appearance-none bg-white" id="narration-voice" name="narration-voice">
+         <option selected value="none">无配音</option>
+         <option value="afei.mp3">阿飞（男声）</option>
+         <option value="awei.mp3">阿伟（男声）</option>
+         <option value="aze.mp3">阿哲（男声）</option>
+         <option value="nana.mp3">娜娜（女声）</option>
+         <option value="lili.mp3">莉莉（女声）</option>
+         <option value="wenjun.mp3">文君（女声）</option>
+         <option value="xiaohua.mp3">小花（童声）</option>
+        </select>
+        <div class="ml-4 flex items-center space-x-2">
+         <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-150 ease-in-out" id="play-narration" type="button">
+          <i class="fas fa-play"></i>
+         </button>
+         <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-150 ease-in-out hidden" id="pause-narration" type="button">
+          <i class="fas fa-pause"></i>
+         </button>
+        </div>
+       </div>
+      </div>
+      <!-- [/MODULE] 7m0_创作视频页面:旁白配音选择 -- 包含配音类型和语速两个下拉选择框，用于设置视频旁白 -->
+      <!-- [MODULE] 6l9_创作视频页面:背景音乐选择 -->
+      <div data-ytextravalue="extra-53vvlrkf7">
+       <label class="block text-sm font-medium text-gray-700 mb-2" data-ytindex="0" data-ytoriginindex="0" data-ytparentvalue="extra-53vvlrkf7" for="background-music" style='top: -1px; position: relative; opacity: 1; color: rgb(55, 65, 81); font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; font-size: 14px; font-weight: 500; font-style: normal; line-height: 20px; text-align: start; text-indent: 0px;'>
+        <i class="fas fa-music text-indigo-500 mr-2"></i>
+        背景音乐
+       </label>
+       <div class="flex items-center" data-ytextravalue="extra-xp70b6bwe" data-ytindex="1" data-ytoriginindex="1">
+        <select class="flex-1 px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out appearance-none bg-white" data-ytindex="0" data-ytoriginindex="0" data-ytparentvalue="extra-xp70b6bwe" id="background-music" name="background-music" style='opacity: 1; color: rgb(0, 0, 0); font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; font-size: 16px; font-weight: 400; font-style: normal; line-height: 24px; text-align: start; text-indent: 0px;'>
+         <option selected value="none">无背景音乐</option>
+         <option value="1-relaxing.mp3">轻松愉悦</option>
+         <option value="2-inspiring.mp3">励志激昂</option>
+         <option value="3-emotional.mp3">情感深沉</option>
+         <option value="4-upbeat.mp3">欢快活泼</option>
+         <option value="5-cinematic.mp3">电影感</option>
+         <option value="6-electronic.mp3">电子音乐</option>
+        </select>
+        <div class="ml-4 flex items-center space-x-2" data-ytindex="1" data-ytoriginindex="1">
+         <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-150 ease-in-out" id="play-music" type="button">
+          <i class="fas fa-play"></i>
+         </button>
+         <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-150 ease-in-out hidden" id="pause-music" type="button">
+          <i class="fas fa-pause"></i>
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- [/MODULE] 6l9_创作视频页面:背景音乐选择 -- 包含下拉选择框和播放/暂停按钮，用于选择和预览背景音乐 -->
+     <!-- [MODULE] 8n1_创作视频页面:生成视频按钮 -->
+     <div class="pt-4 border-t border-gray-100 flex items-center justify-center space-x-4">
+      <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out transform hover:scale-105 active:scale-95" id="generate-video-btn" type="submit">
+       <i class="fas fa-magic mr-2"></i>
+       一键生成视频
+      </button>      
+     </div>
+     <!-- [/MODULE] 8n1_创作视频页面:生成视频按钮 -- 包含一个主要的生成视频按钮，点击后提交表单生成视频 -->
+    </form>
+    <!-- [/MODULE] 3e2_创作视频页面:表单内容 -- 包含视频创作所需的所有输入字段和选项 -->
+    <!-- [MODULE] 9p2_创作视频页面:生成状态 -->
+    <div class="hidden px-6 py-8 text-center" id="generation-status">
+     <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-500 mx-auto">
+     </div>
+     <h3 class="mt-4 text-lg font-medium text-gray-900">视频生成中...</h3>
+     <p class="mt-2 text-gray-600">视频生成时间较长，可关闭窗口，稍后再来。</p>
+     <div class="mt-6 w-full bg-gray-200 rounded-full h-2">
+      <div class="bg-indigo-600 h-2 rounded-full" id="progress-bar" style="width: 0%"></div>
+     </div>
+     <p class="mt-2 text-sm text-gray-500" id="progress-text">0% 完成</p>
+     <button class="mt-6 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out" id="cancel-generation">
+      <i class="fas fa-times mr-2"></i>
+      取消生成
+     </button>
+     <p>
+        <span id="job-demo" class="text-sm text-red-500">单任务排队执行中...</span>
+     </p>  
+     <p>
+         <span id="job-detail" class="text-sm text-gray-400"></span>
+     </p>   
+    </div>
+    <!-- [/MODULE] 9p2_创作视频页面:生成状态 -- 包含加载动画、进度条和取消按钮，用于显示视频生成进度 -->
+    <!-- [MODULE] 0q3_创作视频页面:生成结果 -->
+    <div class="hidden p-6" id="generation-result">
+     <div class="text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-500 mb-4">
+       <i class="fas fa-check text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-medium text-gray-900">视频生成成功！</h3>
+      <p class="mt-2 text-gray-600">您的视频已成功生成，现在可以预览和下载</p>
+     </div>
+     <div class="mt-6 bg-gray-50 rounded-lg p-4">
+      <div class="bg-gray-100 rounded overflow-hidden flex items-center justify-center" style="max-width: 1200px; max-height: 600px; margin: 0 auto;">
+       <img alt="视频预览" class="object-contain mx-auto" src="/static/images/demo_cover.png"/>
+       <button class="absolute flex items-center justify-center w-16 h-16 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-70 transition duration-150 ease-in-out">
+        <i class="fas fa-play text-2xl ml-1"></i>
+       </button>
+      </div>
+     </div>
+     <div class="mt-6 flex justify-center space-x-4">
+      <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+       <i class="fas fa-download mr-2"></i>
+       下载视频
+      </button>
+      <!-- <button class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+       <i class="fas fa-share-alt mr-2"></i>
+       分享视频
+      </button> -->
+      <button class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+       <i class="fas fa-edit mr-2"></i>
+       创作新视频
+      </button>
+     </div>
+    </div>
+    <!-- [/MODULE] 0q3_创作视频页面:生成结果 -- 包含成功提示、视频预览和操作按钮，用于展示生成成功的视频结果 -->
+   </div>
+   <!-- [/MODULE] 5c7_创作视频页面 -- 包含视频创作的完整表单和生成流程界面 -->
+  </main>
+  <!-- [/MODULE] 2b9_主内容区域 -- 包含创作视频页面的完整内容 -->    
+  <!-- [MODULE] 1r4_模态框组件 -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="notification-modal">
+   <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all">
+    <div class="p-6">
+     <div class="text-center mb-4" id="modal-icon">
+      <i class="fas fa-info-circle text-3xl text-indigo-500"></i>
+     </div>
+     <h3 class="text-lg font-medium text-center text-gray-900" id="modal-title">提示</h3>
+     <p class="mt-2 text-center text-gray-600" id="modal-message">这是一条通知信息</p>
+    </div>
+    <div class="bg-gray-50 px-6 py-3 flex justify-center">
+     <button class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out" id="modal-close">确定</button>
+    </div>
+   </div>
+  </div>
+  <!-- [/MODULE] 1r4_模态框组件 -- 用于显示通知和提示信息的模态框组件 -->
+ <script src="/static/js/v2/createvideo.js"></script>   
+{% endblock %}

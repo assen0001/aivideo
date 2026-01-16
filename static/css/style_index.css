@@ -1,0 +1,103 @@
+/**
+ * AI读书视频创作平台 - 首页样式文件
+ * 统一管理index.html的所有CSS样式
+ * 创建时间: 2025年
+ */
+
+/* CSS变量定义 - 主题色彩系统 */
+:root {
+    --primary-color: #00a8ff;
+    --secondary-color: #7b2dff;
+    --text-color: #ffffff;
+    --light-bg: #f8f9fa;
+}
+
+/* 基础样式重置 - 页面全局设置 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0a192f;
+    color: var(--text-color);
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* 科技感标题样式 - 品牌标识 */
+.tech-heading {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* 卡片组件样式 - 平台优势展示 */
+.card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 168, 255, 0.1);
+    border-color: var(--primary-color);
+}
+
+/* 主要按钮样式 - 行动号召按钮 */
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+}
+
+/* 工具类 - 文字加粗 */
+.bold {
+    font-weight: bold;
+}
+
+/* 响应式图片样式 - 悬停效果 */
+.img-fluid {
+    transition: transform 0.3s ease;
+}
+
+.img-fluid:hover {
+    transform: scale(1.5);
+    z-index: 1000;
+    position: relative;
+}
+
+/* 页脚样式 */
+footer {
+    background-color: #f8f9fa;
+    color: #000000;
+}
+
+/* 卡片悬停动画增强 */
+.card.shadow-lg {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 响应式布局调整 */
+@media (max-width: 768px) {
+    .tech-heading {
+        font-size: 1.5rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}

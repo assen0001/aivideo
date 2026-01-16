@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AIVideo - 一站式全流程AI长视频创作平台 - https://www.avideo.site{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/v2/index.css') }}">
+  <script src="{{ url_for('static', filename='js/v2/base.js') }}"></script>
+</head>
+<body>
+    <!-- 引入公共头部 -->
+    {% include 'v2/header.html' %}
+
+    <!-- 主要内容区块 -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 引入公共底部 -->
+    {% include 'v2/footer.html' %}
+
+    <!-- 引入公共JS -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>

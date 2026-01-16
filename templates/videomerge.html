@@ -1,0 +1,42 @@
+{% extends "user/base_user.html" %}
+
+{% block content %}
+<div class="p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">视频合成管理</h2>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="border-b border-gray-200 pb-4 mb-4">
+            <h5 class="text-lg font-medium text-gray-900">视频合成管理</h5>
+        </div>
+        <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <label class="text-sm font-medium text-gray-700">选择书单：</label>
+                <div class="md:col-span-3">
+                    <select id="bookSelect" class="w-full md:w-96 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">-- 请选择书单 --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-start">
+                <button type="button" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition-colors duration-200" id="mergeBtn">视频合成</button>                    
+            </div>
+        </div>
+    </div>
+
+    <!-- 显示视频控件 -->
+    <div class="bg-white rounded-lg shadow-md p-6" id="videoListContainer" style="display:none;">
+        <div class="border-b border-gray-200 pb-4 mb-4">
+            <h5 class="text-lg font-medium text-gray-900">已合成视频</h5>
+        </div>
+        <div id="videoList">
+            <!-- 视频控件将在这里动态生成 -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/videomerge.js') }}"></script>
+{% endblock %}

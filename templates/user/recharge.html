@@ -1,0 +1,120 @@
+{% extends "user/base_user.html" %}
+
+{% block title %}帐号充值 - 用户中心{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <!-- 页面标题 -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">帐号充值</h1>
+    <p class="text-gray-600">为您的账户充值，享受更多AI视频创作服务</p>
+  </div>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- 账户信息 -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">账户信息</h2>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-600">当前余额：</span>
+            <span class="font-bold text-green-600">¥ 128.50</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">已消费：</span>
+            <span class="font-bold">¥ 256.00</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">视频数量：</span>
+            <span class="font-bold">12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 充值选项 -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-lg font-semibold">选择充值金额</h2>
+        </div>
+        
+        <div class="p-6">
+          <!-- 固定金额选项 -->
+          <div class="mb-6">
+            <h3 class="font-medium mb-4">推荐金额</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <label class="relative">
+                <input type="radio" name="amount" class="sr-only peer" value="50">
+                <div class="border-2 rounded-lg p-4 text-center cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50">
+                  <p class="text-lg font-bold">¥ 50</p>
+                  <p class="text-sm text-gray-500">赠送 ¥ 5</p>
+                </div>
+              </label>
+              
+              <label class="relative">
+                <input type="radio" name="amount" class="sr-only peer" value="100" checked>
+                <div class="border-2 rounded-lg p-4 text-center cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50">
+                  <p class="text-lg font-bold">¥ 100</p>
+                  <p class="text-sm text-gray-500">赠送 ¥ 15</p>
+                </div>
+              </label>
+              
+              <label class="relative">
+                <input type="radio" name="amount" class="sr-only peer" value="200">
+                <div class="border-2 rounded-lg p-4 text-center cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50">
+                  <p class="text-lg font-bold">¥ 200</p>
+                  <p class="text-sm text-gray-500">赠送 ¥ 40</p>
+                </div>
+              </label>
+              
+              <label class="relative">
+                <input type="radio" name="amount" class="sr-only peer" value="500">
+                <div class="border-2 rounded-lg p-4 text-center cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50">
+                  <p class="text-lg font-bold">¥ 500</p>
+                  <p class="text-sm text-gray-500">赠送 ¥ 100</p>
+                </div>
+              </label>
+            </div>
+          </div>
+          
+          <!-- 自定义金额 -->
+          <div class="mb-6">
+            <h3 class="font-medium mb-4">自定义金额</h3>
+            <div class="flex items-center space-x-4">
+              <span class="text-gray-600">¥</span>
+              <input type="number" min="10" max="10000" class="border rounded-lg px-3 py-2 w-32" placeholder="输入金额">
+              <span class="text-gray-500 text-sm">最小充值金额 ¥10</span>
+            </div>
+          </div>
+          
+          <!-- 支付方式 -->
+          <div class="mb-6">
+            <h3 class="font-medium mb-4">选择支付方式</h3>
+            <div class="space-y-3">
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="payment" class="text-blue-600" checked>
+                <i class="fab fa-alipay text-blue-500 text-2xl"></i>
+                <span>支付宝</span>
+              </label>
+              
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="payment" class="text-green-600">
+                <i class="fab fa-weixin text-green-500 text-2xl"></i>
+                <span>微信支付</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- 充值按钮 -->
+          <button class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium">
+            立即充值 ¥100.00
+          </button>
+          
+          <p class="text-sm text-gray-500 mt-4 text-center">充值后金额将立即到账，支持退款服务</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

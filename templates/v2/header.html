@@ -1,0 +1,66 @@
+<header class="sticky top-0 z-50 bg-white/80 bg-glass shadow-sm transition-all duration-300">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a class="flex items-center space-x-2" href="/">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <i class="fas fa-video text-white text-xl"></i>
+          </div>
+          <span class="text-xl font-bold bg-gradient-to-r from-primary to-accent text-gradient">AIVideo</span>
+        </a>
+        <span class="hidden md:inline-block text-gray-400 text-sm ml-2">一站式全流程AI长视频创作平台</span>
+      </div>
+      <!-- Navigation Links - Desktop -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/" onclick="setActiveNav(this)">首页</a>
+        <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/createvideo" onclick="setActiveNav(this)">创作视频</a>
+        <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/square" onclick="setActiveNav(this)">视频广场</a>
+        <!-- <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/vip" onclick="setActiveNav(this)">VIP会员</a> -->
+        <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/download" onclick="setActiveNav(this)">源码下载</a>
+        <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out" href="/help" onclick="setActiveNav(this)">帮助中心</a>
+      </nav>
+      <!-- CTA Buttons 判断会员登录状态 -->
+      {% if session.get('user_account') %}
+      <!-- CTA Buttons 已登录状态 -->      
+      <div class="flex items-center">
+        <button class="p-1 rounded-full text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2" >
+          <i class="fas fa-bell"></i>
+        </button>
+        <div class="ml-3 relative">
+          <div>
+            <a href="/user/dashboard" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" id="user-menu-button">
+            <img alt="用户头像" class="h-8 w-8 rounded-full object-cover" src="{{ session.get('avatar', '/static/images/avatar.png') }}" />
+            </a>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <!-- CTA Buttons 未登录状态 -->
+      <div class="flex items-center space-x-4">
+        <a class="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="/login" >登录</a>        
+        <a class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-sm hover:shadow" href="/register" >免费注册</a>        
+        <!-- Mobile menu button -->
+        <button class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-primary hover:bg-gray-100 focus:outline-none" id="mobile-menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+  <!-- Mobile menu, show/hide based on menu state -->
+  <div class='hidden md:hidden bg-white border-t border-gray-200 shadow-lg' id='mobile-menu'>
+        <div class='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-primary bg-gray-50' href='/'>首页</a>
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/createvideo'>创作视频</a>
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/videolist'>视频广场</a>
+          <!-- <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/vip'>VIP会员</a> -->
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/download'>源码下载</a>
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/support'>部署服务</a>
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/help'>帮助中心</a>
+          <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='/login'>登录</a>
+        </div>
+    </div>
+</header>
+<!-- [/MODULE] a1b_导航栏 -- 包含网站logo、导航链接、登录/注册按钮和移动端菜单 -->

@@ -1,0 +1,65 @@
+{% extends 'v2/base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">视频广场</h1>
+    
+    <!-- 搜索和筛选区域 -->
+    <div class="flex justify-between items-center mb-8 flex-wrap">
+        <div class="flex space-x-4 mb-4 md:mb-0">
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag active" data-type="">全部</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="theme-creative">主题创意</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="subtitle-video">字幕配音</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="ai-reading">AI读书</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="poetry-analysis">古诗解析</a>
+            <a href="#" class="px-3 py-1 text-gray-700 hover:text-blue-500 filter-tag" data-type="children-book">儿童绘本</a>
+        </div>
+        
+        <div class="flex space-x-2 w-full md:w-auto">
+            <input type="text" id="search-input" placeholder="输入关键字" class="px-4 py-2 border rounded-md w-full md:w-64">
+            <button id="search-btn" class="px-4 py-2 bg-blue-500 text-white rounded-md">搜索</button>
+        </div>
+    </div>
+    
+    <!-- 视频列表 -->
+    <div id="video-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- 视频将通过JavaScript动态加载 -->
+    </div>
+    
+    <!-- 分页 -->
+    <div class="flex justify-center mt-8">
+        <input type="hidden" id="total-pages" value="0">
+        <nav class="pagination flex items-center space-x-2">
+            <!-- 分页按钮将通过JavaScript动态加载 -->
+        </nav>
+    </div>
+</div>
+
+<!-- 引入JavaScript -->
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/v2/square.js') }}"></script>
+
+<style>
+    /* 筛选标签的活动状态样式 */
+    .filter-tag.active {
+        color: #3b82f6; /* 蓝色 */
+        font-weight: 500;
+        border-bottom: 2px solid #3b82f6;
+    }
+    
+    /* 加载动画样式 */
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+    
+    /* 视频标题截断显示 */
+    .truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+{% endblock %}

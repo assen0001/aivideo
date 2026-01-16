@@ -1,0 +1,96 @@
+{% extends "user/base_user.html" %}
+
+{% block title %}联系客服 - 用户中心{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <!-- 页面标题 -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">联系客服</h1>
+    <p class="text-gray-600">我们随时为您提供帮助和支持</p>
+  </div>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- 联系方式 -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-lg font-semibold">联系方式</h2>
+        </div>
+        
+        <div class="p-6">
+          <div class="space-y-6">
+            <!-- 邮箱支持 -->
+            <div class="flex items-start">
+              <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+                <i class="fas fa-envelope text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-medium">邮箱支持</h3>
+                <p class="text-lg font-bold text-purple-600 mt-1">17305566@qq.com</p>
+                <p class="text-sm text-gray-500">24小时内回复</p>
+              </div>
+            </div>
+            <!-- 微信交流群 -->
+            <div class="flex items-start">
+              <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                <i class="fab fa-weixin text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-medium">微信交流群</h3>
+                <p class="text-blue-600 mt-1">微信扫码加入交流群</p>
+                <img src="https://aivideo.site/static/images/wx001.jpg" alt="微信交流群" width="150" height="150" class="mt-2 rounded-lg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 常见问题 -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-lg font-semibold">常见问题</h2>
+        </div>
+        
+        <div class="p-6">
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-medium text-blue-600 cursor-pointer hover:text-blue-800" onclick="window.location.href='/help?id=2'"></h3>
+                <i class="fas fa-question-circle mr-2"></i>
+                如何创建第一个AI视频？
+              </h3>
+            </div>
+            
+            <div>
+              <h3 class="font-medium text-blue-600 cursor-pointer hover:text-blue-800" onclick="window.location.href='/help?id=1'">
+                <i class="fas fa-question-circle mr-2"></i>
+                这是一个什么平台？
+              </h3>
+            </div>
+            
+            <div>
+              <h3 class="font-medium text-blue-600 cursor-pointer hover:text-blue-800" onclick="window.location.href='/help?id=3'">
+                <i class="fas fa-question-circle mr-2"></i>
+                我要如何部署系统？
+              </h3>
+            </div>
+            
+            <div>
+              <h3 class="font-medium text-blue-600 cursor-pointer hover:text-blue-800" onclick="window.location.href='/help?id=6'">
+                <i class="fas fa-question-circle mr-2"></i>
+                有创作视频演示教程吗？
+              </h3>
+            </div>
+          </div>
+          
+          <button class="w-full bg-gray-100 text-gray-700 py-2 rounded-lg mt-4 hover:bg-gray-200" onclick="window.location.href='/help'">
+            查看更多问题
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

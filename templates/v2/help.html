@@ -1,0 +1,140 @@
+{% extends 'v2/base.html' %}
+
+{% block head %}
+{{ super() }}
+<!-- 引入CKEditor内容样式 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='ckeditor/contents.css') }}">
+<style>
+    /* 确保CKEditor内容样式正确应用 */
+    .cke-content-body {
+        font-family: sans-serif, Arial, Verdana, "Trebuchet MS" !important;
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        color: #333 !important;
+        background-color: #fff !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* 覆盖Tailwind的prose样式，确保CKEditor样式优先 */
+    .cke-content-body * {
+        all: revert !important;
+    }
+    
+    .cke-content-body h1, .cke-content-body h2, .cke-content-body h3, 
+    .cke-content-body h4, .cke-content-body h5, .cke-content-body h6 {
+        font-weight: normal !important;
+        line-height: 1.2 !important;
+        margin: 1em 0 0.5em 0 !important;
+    }
+    
+    .cke-content-body p {
+        margin: 0 0 1em 0 !important;
+    }
+    
+    .cke-content-body blockquote {
+        font-style: italic !important;
+        font-family: Georgia, Times, "Times New Roman", serif !important;
+        padding: 2px 0 !important;
+        border-left: 5px solid #ccc !important;
+        padding-left: 20px !important;
+        margin: 1em 0 !important;
+    }
+    
+    .cke-content-body a {
+        color: #0782C1 !important;
+        text-decoration: underline !important;
+    }
+    
+    .cke-content-body ol, .cke-content-body ul, .cke-content-body dl {
+        padding: 0 40px !important;
+        margin: 1em 0 !important;
+    }
+    
+    .cke-content-body li {
+        margin: 0.5em 0 !important;
+    }
+    
+    .cke-content-body img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    .cke-content-body table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        margin: 1em 0 !important;
+    }
+    
+    .cke-content-body table, .cke-content-body th, .cke-content-body td {
+        border: 1px solid #ccc !important;
+        padding: 8px !important;
+    }
+    
+    .cke-content-body pre {
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        background: #f5f5f5 !important;
+        padding: 10px !important;
+        border-radius: 3px !important;
+        margin: 1em 0 !important;
+    }
+    
+    .cke-content-body hr {
+        border: 0 !important;
+        border-top: 1px solid #ccc !important;
+        margin: 1em 0 !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">帮助中心</h1>
+        <div class="flex items-center">
+            <input type="text" placeholder="输入关键字搜索" class="border rounded-l px-4 py-2 focus:outline-none w-64">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600 transition-colors duration-200">搜索</button>
+        </div>
+    </div>
+    
+    <div class="flex">
+        <!-- 左侧菜单 -->
+        <div class="w-1/4 pr-4">
+            <div class="bg-white rounded-lg shadow p-4">
+                <h3 class="font-semibold text-gray-800 mb-4 pb-2 border-b">文章分类</h3>
+                <ul class="space-y-2">
+                    <!-- 动态加载分类和文章列表 -->
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 右侧内容 -->
+        <div class="w-3/4">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="text-center">
+                    <!-- 开源软件介绍 -->
+                    <div class="mt-8 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-left">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">🔍 关于AIVideo</h2>
+                        <p class="text-gray-700 mb-4">
+                            AIVideo是一款<span class="font-semibold text-blue-600">开源的全流程AI视频创作平台</span>，采用MIT许可协议发布。
+                            它能够实现从单个主题输入到完整专业级视频输出的端到端自动化创作流程。
+                        </p>
+                        
+                        <h3 class="text-xl font-bold text-gray-800 mt-6 mb-3">✨ 核心功能</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
+                            <li>一站式全流程生成：输入主题 → 输出专业级长视频（含分镜/画面/字幕/配音/剪辑）</li>
+                            <li>AI智能编剧：可按视频类型定制文案生成模板</li>
+                            <li>全自动化生产：无需人工干预的视频创作流程</li>
+                            <li>多平台适配：支持抖音、B站、小红书、今日头条等平台</li>
+                        </ul>           
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/v2/help.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,203 @@
+{% extends 'v2/base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+        <!-- 面包屑导航 -->
+        <div class="mb-6">
+            <nav class="text-sm text-gray-500">
+                <a href="/" class="hover:text-primary">首页</a>
+                <span class="mx-2">></span>
+                <a href="/square" class="hover:text-primary">视频广场</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-800">视频详情</span>
+            </nav>
+        </div>
+
+        <!-- 视频详情内容 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 左侧视频区域 -->
+            <div class="lg:col-span-2">
+                <!-- 视频播放器：根据video.bilibili_url的值动态选择播放模式 -->
+                {% if video.bilibili_url and video.bilibili_url.strip() %}
+                    <!-- 播放模式1：当bilibili_url不为空时，使用B站iframe播放器 -->
+                    <div class="bg-black rounded-lg overflow-hidden mb-6">
+                        <div class="relative pt-[56.25%] bg-gray-900">
+                            <!-- 直接嵌入B站iframe代码 -->
+                            <div class="absolute inset-0">
+                                {{ video.bilibili_url|safe }}
+                                <script>
+                                    // 调整B站iframe尺寸
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const iframes = document.querySelectorAll('iframe[src*="bilibili.com"]');
+                                        iframes.forEach(iframe => {
+                                            // 设置iframe样式以适应容器
+                                            iframe.style.width = '100%';
+                                            iframe.style.height = '100%';
+                                            iframe.style.position = 'absolute';
+                                            iframe.style.top = '0';
+                                            iframe.style.left = '0';
+                                            
+                                            // 添加必要的属性以支持全屏
+                                            iframe.allowFullscreen = true;
+                                            iframe.setAttribute('webkitallowfullscreen', 'true');
+                                            iframe.setAttribute('mozallowfullscreen', 'true');
+                                            // 等待 iframe 加载完成后点击音量按钮
+                                            // iframe.addEventListener('load', function() {
+                                            //     try {
+                                            //         // 获取 iframe 内部的音量按钮
+                                            //         const volumeBtn = iframe.contentDocument.querySelector('.bpx-player-ctrl-volume');
+                                            //         if (volumeBtn) {
+                                            //             volumeBtn.click(); // 执行点击操作，打开音量
+                                            //         }
+                                            //     } catch (e) {
+                                            //         // 跨域限制时无法访问 contentDocument，可尝试通过 postMessage 与 iframe 内部通信
+                                            //         iframe.contentWindow.postMessage({ action: 'clickVolume' }, '*');
+                                            //     }
+                                            // });
+
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- 播放模式2：当bilibili_url为空时，使用本地视频播放器 -->
+                    <div class="bg-black rounded-lg overflow-hidden mb-6">
+                        <div class="relative pt-[56.25%] bg-gray-900">
+                            <!-- 视频封面 -->
+                            <img src="{{ url_for('static', filename=video.videocover_url.split('static/')[1]) if video.videocover_url.startswith('static/') else video.videocover_url }}" 
+                                class="absolute top-0 left-0 w-full h-full object-cover" 
+                                id="videoCover">
+                            
+                            <!-- 视频播放器 -->
+                            <video class="absolute top-0 left-0 w-full h-full hidden" 
+                                id="videoPlayer" 
+                                controls>
+                                <source src="{{ url_for('static', filename=video.videomerge_url.split('static/')[1]) if video.videomerge_url.startswith('static/') else video.videomerge_url }}" type="video/mp4">
+                                您的浏览器不支持视频播放。
+                            </video>
+                            
+                            <!-- 播放按钮 -->
+                            <div class="absolute inset-0 flex items-center justify-center cursor-pointer" 
+                                id="playButton">
+                                <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all">
+                                    <i class="fas fa-play text-white text-3xl ml-1"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- 视频时长 -->
+                            <div class="absolute bottom-4 right-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
+                                <i class="fas fa-clock mr-1"></i>
+                                <span id="videoDuration">{{ video.play_time }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                
+
+        <!-- 视频信息 -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">文本内容：{{ video.book_note.split('\n')[0] if '\n' in video.book_note else video.book_note[:50] }}</h1>
+            
+            <!-- 作者信息 -->
+            <div class="flex items-center mb-6">
+                <img src="{{ url_for('static', filename=video.avatar.split('static/')[1]) if video.avatar.startswith('static/') else video.avatar }}" 
+                     class="w-12 h-12 rounded-full mr-4">
+                <div>
+                    <div class="font-medium text-gray-800">{{ video.nickname }}</div>
+                    <div class="text-sm text-gray-500">{{ video.create_time }}发布</div>
+                </div>
+                <div class="ml-auto flex space-x-3">
+                    <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                        <i class="fas fa-heart mr-2"></i>点赞
+                    </button>
+                    <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-share mr-2"></i>分享
+                    </button>
+                </div>
+            </div>
+
+            <!-- 视频详情字段 -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频类型</div>
+                    <input type="hidden" id="video_type_value" value="{{ video.video_type_value }}">
+                    <div class="font-medium">{{ video.video_type }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频比例</div>
+                    <div class="font-medium">{{ video.video_aspect }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频时长</div>
+                    <div class="font-medium">{{ video.play_time }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">视频风格</div>
+                    <div class="font-medium">{{ video.video_style }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">字幕配音</div>
+                    <div class="font-medium">{{ video.video_voice }}</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="text-gray-500 mb-1">背景音乐</div>
+                    <div class="font-medium">{{ video.video_music }}</div>
+                </div>
+            </div>
+
+            <!-- 文本内容 -->
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold mb-3">视频文案内容</h3>
+                <div class="text-gray-700 leading-relaxed">
+                    {{ video.book_content|safe }}
+                </div>
+            </div>
+
+            <!-- 播放统计 -->
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="flex items-center text-gray-500 text-sm">
+                    <i class="fas fa-eye mr-2"></i>
+                    <span>播放次数：<span class="font-medium">{{ '{:,}'.format(video.views) }}</span> 次</span>
+                </div>
+            </div>
+                </div>
+            </div>
+
+            <!-- 右侧区域 -->
+            <div class="lg:col-span-1">
+
+                <!-- 同类型视频推荐 -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold mb-4">同类型热门视频</h3>
+                    
+                    <!-- 推荐视频列表 -->
+                    <div class="space-y-4" id="recommendedVideos">
+                        {% if recommended_videos and recommended_videos|length > 0 %}
+                            {% for video in recommended_videos %}
+                            <a href="/videoview?id={{ video.id }}" class="flex space-x-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                                <img src="{{ url_for('static', filename=video.videocover_url.split('static/')[1]) if video.videocover_url.startswith('static/') else video.videocover_url }}" 
+                                     class="w-16 h-12 rounded object-cover flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-medium text-gray-800 text-sm truncate mb-1">{{ video.book_name }}</div>
+                                    <div class="text-xs text-gray-500">{{ video.video_style }} {{ '{:,}'.format(video.views) }} 次播放</div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center text-gray-500 py-4">暂无同类型视频推荐</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- 视频播放控制脚本 -->
+    <script src="{{ url_for('static', filename='js/v2/videoview.js') }}"></script>
+{% endblock %}

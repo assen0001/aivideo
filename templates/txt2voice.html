@@ -1,0 +1,112 @@
+{% extends "user/base_user.html" %}
+
+{% block content %}
+<div class="p-6">
+    <h2 class="text-2xl font-bold mb-4">字幕转语音</h2>
+    
+    <div class="bg-white rounded-lg shadow-md mt-4">
+        <div class="bg-gray-50 px-4 py-3 border-b rounded-t-lg">
+            <h5 class="text-lg font-medium">字幕转语音管理</h5>
+        </div>
+        <div class="p-4">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+                <label class="md:col-span-1 flex items-center font-medium">选择项目：</label>
+                <div class="md:col-span-4">
+                    <select id="bookSelect" class="w-full md:w-96 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">-- 请选择书单 --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 mt-4">
+                <label class="md:col-span-1 flex items-center font-medium">字幕内容：</label>
+                <div class="md:col-span-4">
+                    <textarea id="subtitleContent" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" rows="12" readonly></textarea>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 mt-4">
+                <label class="md:col-span-1 flex items-center font-medium">选择音色：</label>
+                <div class="md:col-span-4">
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice1" value="aze.mp3" checked>
+                            <label class="ml-2 text-gray-700" for="voice1">阿泽</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice2" value="awei.mp3">
+                            <label class="ml-2 text-gray-700" for="voice2">阿伟</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice3" value="afei.mp3">
+                            <label class="ml-2 text-gray-700" for="voice3">阿飞</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice4" value="wenjun.mp3">
+                            <label class="ml-2 text-gray-700" for="voice4">文君</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice5" value="lili.mp3">
+                            <label class="ml-2 text-gray-700" for="voice5">莉莉</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice6" value="nana.mp3">
+                            <label class="ml-2 text-gray-700" for="voice6">娜娜</label>
+                        </div>                        
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice7" value="xiaohua.mp3">
+                            <label class="ml-2 text-gray-700" for="voice7">小花</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-linear rounded-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="radio" name="voiceType" id="voice8" value="JackMa_mayun.mp3">
+                            <label class="ml-2 text-gray-700" for="voice8">JackMa</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 语速控制滑块 -->
+            <!-- <div class="form-group row mt-3">
+                <label class="col-sm-2 col-form-label">语速控制：</label>
+                <div class="col-sm-10"  style="width: 880px; ">
+                    <input type="range" id="speedSlider" name="speed" min="0.5" max="2" step="0.1" value="1.1" class="form-range">
+                    <div class="row mt-2">
+                        <div class="col-sm-2">
+                            <span class="badge bg-secondary">慢速</span>
+                        </div>
+                        <div class="col-sm-8 text-center">
+                            <span id="speedValue" class="badge bg-primary">1.1</span>
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            <span class="badge bg-secondary">快速</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 mt-6">
+                <div class="md:col-span-1"></div>
+                <div class="md:col-span-4">
+                    <button id="submitBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">字幕转换成语音</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 显示已完成的语音控件 --->
+    <div class="bg-white rounded-lg shadow-md mt-4" id="voiceListContainer" style="display:none;">
+        <div class="bg-gray-50 px-4 py-3 border-b rounded-t-lg">
+            <h5 class="text-lg font-medium">已生成语音</h5>
+        </div>
+        <div class="p-4" id="voiceList">
+            <!-- 音频控件将在这里动态生成 -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/txt2voice.js') }}"></script>
+{% endblock %}

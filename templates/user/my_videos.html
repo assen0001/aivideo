@@ -1,0 +1,129 @@
+{% extends "user/base_user.html" %}
+
+{% block title %}我的视频 - 用户中心{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <!-- 页面标题和操作按钮 -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">我的视频</h1>
+      <p class="text-gray-600">管理您创建的所有视频</p>
+    </div>
+    <a href="/createvideo" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+      <i class="fas fa-plus mr-2"></i>创建新视频
+    </a>
+  </div>
+  
+  <!-- 视频列表 -->
+  <div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b">
+      <h2 class="text-lg font-semibold">视频列表</h2>
+    </div>
+    
+    <div class="p-6">
+      <!-- 搜索和筛选 -->
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex space-x-4">
+          <select id="status-filter" class="border rounded-lg px-3 py-2">
+            <option value="">全部状态</option>
+            <option value="6">已完成</option>
+            <option value="1,2,3,4,5">处理中</option>
+            <option value="0">未处理</option>
+          </select>
+          <input type="text" id="search-input" placeholder="搜索关键字..." class="border rounded-lg px-3 py-2 w-64">
+          <button id="search-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            <i class="fas fa-search mr-2"></i>搜索
+          </button>
+        </div>
+      </div>
+      
+      <!-- 视频表格 -->
+      <div class="overflow-x-auto">
+        <table id="videos-table" class="w-full">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-3 px-4">视频名称</th>
+              <th class="text-left py-3 px-4">创建时间</th>
+              <th class="text-left py-3 px-4">状态</th>
+              <th class="text-left py-3 px-4">时长</th>
+              <th class="text-left py-3 px-4">播放次数</th>
+              <th class="text-left py-3 px-4">视频广场</th>
+              <th class="text-left py-3 px-4">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 动态数据将通过JavaScript填充 -->
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- 分页和结果计数 -->
+      <div class="flex justify-between items-center mt-6">
+        <p id="result-count" class="text-gray-600">显示 0 条，共 0 条</p>
+        <div id="pagination-container" class="flex space-x-2">
+          <!-- 分页按钮将通过JavaScript动态生成 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 加载JavaScript文件 -->
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/user/my_video.js') }}"></script>
+
+<!-- 状态样式定义 -->
+<style>
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-completed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-processing {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.notification-success {
+  background-color: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.notification-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.notification-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+
+.notification-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'v2/base.html' %}
+
+{% block title %}会员注册 - AI视频创作平台{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center py-12">
+    <div class="w-full max-w-md">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="px-6 py-8 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-center text-gray-800">会员注册</h3>
+            </div>
+            <div class="px-6 py-8">
+                <form id="registerForm" method="post" action="/register">
+                    <div class="mb-6">
+                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">邮箱地址</label>
+                        <input type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" placeholder="请输入邮箱地址" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="verificationCode" class="block text-gray-700 text-sm font-bold mb-2">验证码</label>
+                        <div class="flex space-x-2">
+                            <input type="text" class="shadow appearance-none border rounded flex-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="verificationCode" name="verificationCode" placeholder="请输入验证码" required>
+                            <button type="button" class="btn btn-blue bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" id="sendCodeBtn">发送验证码</button>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" class="mr-2" required>
+                            <label for="agreeTerms" class="text-sm text-gray-600">我已阅读并同意<a href="/help?id=4" class="text-blue-500 hover:underline" target="_blank">用户协议</a></label>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">提交注册</button>
+                        <button type="button" class="btn btn-secondary bg-gray-200 hover:bg-gray-300 text-gray-800  py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" id="cancelBtn">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/v2/register.js') }}"></script>
+{% endblock %}

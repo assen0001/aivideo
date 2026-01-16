@@ -1,0 +1,64 @@
+{% extends 'v2/base.html' %}
+
+{% block title %}下载 - AIVideo - 一站式全流程AI视频创作平台 - http://www.avideo.site{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">AIVideo 源代码下载、镜像部署</h1>
+        <p class="text-gray-600 text-lg">选择适合您的下载方式，开始体验全流程AI视频创作</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- GitHub 下载 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+            <div class="bg-gray-50 p-6">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fab fa-github text-5xl text-gray-800"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-3">从 GitHub 下载</h3>
+                <p class="text-gray-600 text-center mb-6">获取最新版本源码，参与社区贡献</p>
+                <div class="text-center">
+                    <a href="https://github.com/assen0001/aivideo" target="_blank" class="inline-flex items-center justify-center px-6 py-3 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors duration-300">
+                        <i class="fab fa-github mr-2"></i>
+                        访问 GitHub 仓库
+                    </a>
+                </div>
+                <p class="mt-4 text-sm text-center text-gray-500">面向技术开发者，支持二次开发</p>
+            </div>
+        </div>
+        
+        <!-- 镜像部署 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+            <div class="bg-gray-50 p-6">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fas fa-server text-5xl text-blue-600"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-3">从镜像部署</h3>
+                <p class="text-gray-600 text-center mb-6">从镜像安装包直接部署，简单、快速</p>
+                <div class="text-center">
+                    <a href="https://www.xiangongyun.com/image/detail/5bd7a57f-d8a2-42e4-b25f-5399e6903976" target="_blank" id="imageDeploy" class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                        <i class="fas fa-cloud-download-alt mr-2"></i>
+                        前往部署
+                    </a>
+                </div>
+                <p class="mt-4 text-sm text-red-500 text-center text-gray-500">免费使用4小时、简单、快捷</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 下载说明 -->
+    <div class="mt-16 bg-gray-50 rounded-xl p-8 border border-gray-200">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">下载说明</h3>
+        <div class="space-y-4 text-gray-600">
+            <p><i class="fas fa-info-circle text-blue-500 mr-2"></i> 使用GitHub源代码部署：面向技术开发者，须本地部署Python、N8N、ComfyUI、Index-TTS等依赖项</p>
+            <p><i class="fas fa-info-circle text-blue-500 mr-2"></i> 使用镜像部署：面向技术小白，无需本地部署，直接在云服务器上运行，适合快速部署使用</p>
+            <p><i class="fas fa-info-circle text-blue-500 mr-2"></i> 如有安装问题，请参考项目文档或提交Issue</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/v2/download.js') }}"></script>
+{% endblock %}
